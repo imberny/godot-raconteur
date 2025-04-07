@@ -8,27 +8,16 @@ enum Type {
     BOOL,
 }
 
-class Instruction:
-    var name: String
-    var args: Array
-    var callback: Callable
-    func _init(name_: String, args_: Array) -> void:
-        name = name_
-        args = args_
-    
-    func is_eq(other: Instruction) -> bool:
-        return name == other.name and args == other.args and callback == other.callback
-
-var _enums: Dictionary[String, Array] = {}
-var _properties: Dictionary[String, Type] = {}
-var _entities: Dictionary[String, Array] = {}
+var _enums: Dictionary[StringName, Array] = {}
+var _properties: Dictionary[StringName, Type] = {}
+var _entities: Dictionary[StringName, Array] = {}
 var _flags: Array = []
-var _relationships: Dictionary[Array, String] = {}
-var _instructions: Dictionary[String, Instruction] = {}
-var _global_entities: Dictionary[String, String] = {}
+var _relationships: Dictionary[Array, StringName] = {}
+var _instructions: Dictionary[StringName, RaconteurInstruction] = {}
+var _global_entities: Dictionary[StringName, StringName] = {}
 
 
-func enum_add(name: String, values: Array) -> void:
+func enum_add(name: StringName, values: Array) -> void:
     _enums[name] = values
 
 
@@ -36,7 +25,7 @@ func enums() -> Dictionary:
     return _enums
 
 
-func property_add(name: String, type: Type) -> void:
+func property_add(name: StringName, type: Type) -> void:
     _properties[name] = type
 
 
@@ -44,7 +33,7 @@ func properties() -> Dictionary:
     return _properties
 
 
-func entity_add(name: String, entity_properties: Array) -> void:
+func entity_add(name: StringName, entity_properties: Array) -> void:
     _entities[name] = entity_properties
 
 
@@ -52,7 +41,7 @@ func entities() -> Dictionary:
     return _entities
 
 
-func flag_add(name: String) -> void:
+func flag_add(name: StringName) -> void:
     _flags.push_back(name)
 
 
@@ -60,7 +49,7 @@ func flags() -> Array:
     return _flags
 
 
-func relationship_add(entity_a: String, entity_b: String, relationship: String) -> void:
+func relationship_add(entity_a: StringName, entity_b: StringName, relationship: StringName) -> void:
     _relationships[[entity_a, entity_b]] = relationship
 
 
@@ -68,11 +57,11 @@ func relationships() -> Dictionary:
     return _relationships
 
 
-func instruction_add(name: String, args: Array) -> void:
-    _instructions[name] = Instruction.new(name, args)
+func instruction_add(name: StringName, args: Array) -> void:
+    _instructions[name] = RaconteurInstruction.new(name, args)
 
 
-func instruction_set_callback(name: String, callback: Callable) -> void:
+func instruction_set_callback(name: StringName, callback: Callable) -> void:
     var instruction = _instructions[name]
     if len(instruction.args) != callback.get_argument_count():
         push_error(
@@ -82,11 +71,12 @@ func instruction_set_callback(name: String, callback: Callable) -> void:
         return
     instruction.callback = callback
 
+
 func instructions() -> Dictionary:
     return _instructions
 
 
-func global_entity_add(name: String, entity_type: String) -> void:
+func global_entity_add(name: StringName, entity_type: StringName) -> void:
     _global_entities[name] = entity_type
 
 
