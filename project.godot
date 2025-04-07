@@ -14,6 +14,17 @@ config/name="Raconteur"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "red",
+"res://tests/": "gray"
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
