@@ -53,3 +53,7 @@ func test_schema():
 
     schema.global_entity_add(&"PROTAGONIST", &"character")
     assert_eq(schema.global_entities()[&"PROTAGONIST"], &"character")
+
+
+    var ok := schema.entity_validate(&"item", {"name": &"Sword", "quality": &"shoddy"})
+    assert_true(ok)

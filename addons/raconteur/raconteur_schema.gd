@@ -28,6 +28,15 @@ func enums() -> Dictionary:
     return _enums
 
 
+## Validates if the given value is a valid enum value.
+func enum_validate(name: StringName, value: StringName) -> bool:
+    var enum_values: Array = _enums.get(name, [])
+    if not enum_values.has(value):
+        push_error("Invalid enum value '%s' for enum '%s'" % [value, name])
+        return false
+    return true
+
+
 ## Adds a new property to the schema with the given name and type.
 func property_add(name: StringName, type: Type) -> void:
     _properties[name] = type
@@ -52,6 +61,22 @@ func entities() -> Dictionary:
 func entity_get(name: StringName) -> Array:
     return _entities.get(name, [])
 
+
+## Validates if the given properties match the expected properties for the entity type.
+func entity_validate(name: StringName, properties: Dictionary) -> bool:
+    var successful := true
+    var entity_properties: Array = entity_get(name)
+    for property in entity_properties:
+        if not properties.has(property):
+            push_error("Missing property '%s' for entity '%s'" % [property, name])
+            successful = false
+        var type := _properties.get(property, null)
+        if type == Type.ENUM:
+            var enum_value: StringName = properties[property]
+            if not enum_validate(property, enum_value):
+                push_error("Invalid enum value '%s' for property '%s' in entity '%s'" % [properties[property], property, name])
+                successful = false
+    return successful
 
 ## Adds a tag to the schema.
 ## Tags are used to mark entities with specific characteristics or states.
