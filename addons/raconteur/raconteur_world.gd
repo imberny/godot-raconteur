@@ -9,13 +9,13 @@ func _init(schema: RaconteurSchema) -> void:
     _schema = schema
 
 
-func entity_add(name: StringName, properties: Dictionary) -> void:
-    var ok := _schema.entity_validate(name, properties)
-    if not ok:
-        push_error("Entity '%s' does not match schema" % name)
-        return
+func entity_add(name: StringName, properties: Dictionary) -> Array:
+    var errors := _schema.entity_validate(name, properties)
+    if not errors.is_empty():
+        return errors
     
     _entities[name] = properties
+    return []
 
 
 func relationship_add(
