@@ -10,8 +10,8 @@ func test_world():
 
 	var world := RaconteurWorld.new(schema)
 
-	assert_eq(world.entity_add(&"character", {"name": &"Alice"}), [])
-	assert_eq(world.entity_add(&"character", {"name": &"Bob"}), [])
-	world.relationship_add(&"Alice", &"Bob", &"knows", &"friend")
+	assert_eq(world.entity_add(&"character", &"alice", {"name": &"Alice"}), [])
+	assert_eq(world.entity_add(&"character", &"bob", {"name": &"Bob"}), [])
+	assert_eq(world.relationship_add(&"alice", &"bob", &"knows", &"friend"), [])
 
 	assert_true(true)

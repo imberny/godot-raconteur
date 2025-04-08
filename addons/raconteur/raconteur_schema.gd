@@ -77,21 +77,21 @@ func entity_validate(name: StringName, properties: Dictionary) -> Array:
     var errors := []
     var entity_properties: Array = entity_get(name)
     if entity_properties.is_empty():
-        errors.push_back("Entity '%s' not found" % name)
+        errors.append("Entity '%s' not found" % name)
         return errors
     for property_name in entity_properties:
         if not properties.has(property_name):
-            errors.push_back("Missing property '%s' for entity '%s'" % [property_name, name])
+            errors.append("Missing property '%s' for entity '%s'" % [property_name, name])
         var property_error := property_validate(property_name, properties[property_name])
         if property_error:
-            errors.push_back(property_error)
+            errors.append(property_error)
     return errors
 
 
 ## Adds a tag to the schema.
 ## Tags are used to mark entities with specific characteristics or states.
 func tag_add(name: StringName) -> void:
-    _tags.push_back(name)
+    _tags.append(name)
 
 
 ## Returns an array of all tags in the schema.
@@ -112,7 +112,7 @@ func relationship_add(
     relationship[[entity_a, entity_b]] = RaconteurRelationship.new(entity_a, entity_b, qualifier_property)
     if not _entity_relationships_map.has([entity_a, entity_b]):
         _entity_relationships_map[[entity_a, entity_b]] = []
-    _entity_relationships_map[[entity_a, entity_b]].push_back(
+    _entity_relationships_map[[entity_a, entity_b]].append(
         relationship_name
     )
 
@@ -135,6 +135,17 @@ func relationship_get(relationship_name: StringName, entity_a: StringName, entit
         return null
     
     return relationships.get([entity_a, entity_b], null)
+
+
+func relationship_validate(entity_a: StringName, entity_b: StringName, relationship_name: StringName, qualifier_value: StringName) -> Array:
+    var errors := []
+    var relationship: RaconteurRelationship = relationship_get(relationship_name, entity_a, entity_b)
+    if not relationship:
+        errors.append("Relationship '%s' between '%s' and '%s' not found" % [relationship_name, entity_a, entity_b])
+        return errors
+    if not relationship.qualifier_property == &"" and not qualifier_value:
+        errors.append("Qualifier value required for relationship '%s'" % relationship_name)
+    return errors
 
 
 ## Adds a new instruction to the schema with the given name and arguments.
