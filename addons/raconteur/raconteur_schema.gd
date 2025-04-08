@@ -1,3 +1,4 @@
+## A schema describing the structure of the narrative world.
 class_name RaconteurSchema extends Resource
 
 
@@ -41,10 +42,12 @@ func properties() -> Dictionary:
     return _properties
 
 
+## Returns a RaconteurProperty object for the given property name.
 func property_get(property_name: StringName) -> RaconteurProperty:
     return _properties.get(property_name, null)
 
 
+## Validates if the given value is a valid property value.
 func property_validate(property_name: StringName, value: Variant) -> String:
     var property: RaconteurProperty = _properties.get(property_name, null)
     if not property:
@@ -53,6 +56,7 @@ func property_validate(property_name: StringName, value: Variant) -> String:
     return property.validate(self, value)
 
 
+## Checks if the schema contains an entity with the given name.
 func entity_has(name: StringName) -> bool:
     return _entities.has(name)
 
@@ -70,22 +74,6 @@ func entities() -> Dictionary:
 ## Returns the properties of a specific entity type.
 func entity_get(name: StringName) -> Array:
     return _entities.get(name, [])
-
-
-## Validates if the given properties match the expected properties for the entity type.
-func entity_validate(name: StringName, properties: Dictionary) -> Array:
-    var errors := []
-    var entity_properties: Array = entity_get(name)
-    if entity_properties.is_empty():
-        errors.append("Entity '%s' not found" % name)
-        return errors
-    for property_name in entity_properties:
-        if not properties.has(property_name):
-            errors.append("Missing property '%s' for entity '%s'" % [property_name, name])
-        var property_error := property_validate(property_name, properties[property_name])
-        if property_error:
-            errors.append(property_error)
-    return errors
 
 
 ## Adds a tag to the schema.
@@ -109,7 +97,7 @@ func relationship_add(
     if not _relationships.has(relationship_name):
         _relationships[relationship_name] = {}
     var relationship := _relationships[relationship_name]
-    relationship[[entity_a, entity_b]] = RaconteurRelationship.new(entity_a, entity_b, qualifier_property)
+    relationship[[entity_a, entity_b]] = RaconteurRelationship.new(relationship_name, entity_a, entity_b, qualifier_property)
     if not _entity_relationships_map.has([entity_a, entity_b]):
         _entity_relationships_map[[entity_a, entity_b]] = []
     _entity_relationships_map[[entity_a, entity_b]].append(
@@ -137,6 +125,7 @@ func relationship_get(relationship_name: StringName, entity_a: StringName, entit
     return relationships.get([entity_a, entity_b], null)
 
 
+## Returns a list of errors in the described relationship.
 func relationship_validate(entity_a: StringName, entity_b: StringName, relationship_name: StringName, qualifier_value: StringName) -> Array:
     var errors := []
     var relationship: RaconteurRelationship = relationship_get(relationship_name, entity_a, entity_b)
@@ -145,6 +134,8 @@ func relationship_validate(entity_a: StringName, entity_b: StringName, relations
         return errors
     if not relationship.qualifier_property == &"" and not qualifier_value:
         errors.append("Qualifier value required for relationship '%s'" % relationship_name)
+    var relationship_errors := relationship.validate(self, entity_a, entity_b, qualifier_value)
+    errors.append_array(relationship_errors)
     return errors
 
 
@@ -177,13 +168,3 @@ func instructions() -> Dictionary:
 ## Returns a specific RaconteurInstruction object.
 func instruction_get(name: StringName) -> RaconteurInstruction:
     return _instructions.get(name, null)
-
-
-## Adds a global entity to the schema with the given name and type.
-func global_entity_add(name: StringName, entity_type: StringName) -> void:
-    _global_entities[name] = entity_type
-
-
-## Returns a dictionary of global entity names to their types.
-func global_entities() -> Dictionary:
-    return _global_entities

@@ -13,5 +13,8 @@ func test_world():
 	assert_eq(world.entity_add(&"character", &"alice", {"name": &"Alice"}), [])
 	assert_eq(world.entity_add(&"character", &"bob", {"name": &"Bob"}), [])
 	assert_eq(world.relationship_add(&"alice", &"bob", &"knows", &"friend"), [])
+	assert_ne(world.relationship_add(&"alice", &"bob", &"owns"), []) # invalid
 
-	assert_true(true)
+
+	world.global_entity_add(&"character", &"PROTAGONIST", {})
+	assert_eq(world.global_entity_get(&"PROTAGONIST").type(), &"character")
