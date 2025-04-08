@@ -30,7 +30,7 @@ func test_schema():
 	schema.entity_add(&"character", [&"name"])
 	assert_eq(schema.entity_get(&"item"), [&"name", &"quality"])
 	assert_eq(schema.entity_get(&"character"), [&"name"])
-	assert_true(schema.entity_validate(&"item", {&"name": &"Sword", &"quality": &"shoddy"}))
+	assert_true(schema.entity_validate(&"item", {&"name": "Sword", &"quality": &"shoddy"}))
 	assert_false(schema.entity_validate(&"item", {&"name": &"Sword", &"quality": &"invalid_quality"}))
 
 	schema.tag_add(&"stolen")

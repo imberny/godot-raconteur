@@ -35,7 +35,7 @@ func validate(schema: RaconteurSchema, value: Variant) -> bool:
 		Type.INT:
 			return value is int
 		Type.STRING:
-			return value is StringName
+			return value is String or value is StringName
 		Type.BOOL:
 			return value is bool
 	return false
