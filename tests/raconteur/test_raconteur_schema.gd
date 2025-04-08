@@ -7,8 +7,14 @@ func test_schema():
     var quality_enum := &"quality"
     var quality_values := [&"shoddy", &"good", &"superior"]
     schema.enum_add(quality_enum, quality_values)
+    var relation_enum := &"relation"
+    var relation_values := [&"friend", &"enemy"]
+    schema.enum_add(relation_enum, relation_values)
     var enums := schema.enums()
-    assert_eq(enums, {quality_enum: quality_values})
+    assert_eq(enums, {
+        quality_enum: quality_values,
+        relation_enum: relation_values,
+    })
 
     schema.property_add(&"name", RaconteurSchema.Type.STRING)
     schema.property_add(&"quality", RaconteurSchema.Type.ENUM)
@@ -32,9 +38,13 @@ func test_schema():
     var flags := schema.flags()
     assert_eq(flags, [&"stolen"])
 
-    schema.relationship_add(&"item", &"character", &"owner")
+    schema.relationship_add(&"owns", &"character", &"item")
+    schema.relationship_add(&"knows", &"character", &"character", &"relation")
+    schema.relationship_add(&"knows", &"character", &"item")
     var relationships := schema.relationships()
-    assert_eq(relationships[[&"item", &"character"]], &"owner")
+    var item_owning_relationship: RaconteurRelationship = relationships[&"owns"][0]
+    assert_true(item_owning_relationship.is_eq(RaconteurRelationship.new(&"character", &"item")))
+    assert_eq(schema.entity_relationships(&"character", &"item"), [&"owns", &"knows"])
 
     var speak_callback := func(_speaker: String, _listener: String, _speech: String): pass
     var speak_instruction := &"speak"

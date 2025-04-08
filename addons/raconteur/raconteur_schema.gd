@@ -12,7 +12,8 @@ var _enums: Dictionary[StringName, Array] = {}
 var _properties: Dictionary[StringName, Type] = {}
 var _entities: Dictionary[StringName, Array] = {}
 var _flags: Array = []
-var _relationships: Dictionary[Array, StringName] = {}
+var _relationships: Dictionary[StringName, Array] = {}
+var _entity_relationships_map: Dictionary[Array, Array] = {}
 var _instructions: Dictionary[StringName, RaconteurInstruction] = {}
 var _global_entities: Dictionary[StringName, StringName] = {}
 
@@ -49,12 +50,30 @@ func flags() -> Array:
     return _flags
 
 
-func relationship_add(entity_a: StringName, entity_b: StringName, relationship: StringName) -> void:
-    _relationships[[entity_a, entity_b]] = relationship
+func relationship_add(
+    relationship: StringName,
+    entity_a: StringName,
+    entity_b: StringName,
+    qualifier_property := &"",
+) -> void:
+    if not _relationships.has(relationship):
+        _relationships[relationship] = []
+    _relationships[relationship].push_back(
+        RaconteurRelationship.new(entity_a, entity_b, qualifier_property)
+    )
+    if not _entity_relationships_map.has([entity_a, entity_b]):
+        _entity_relationships_map[[entity_a, entity_b]] = []
+    _entity_relationships_map[[entity_a, entity_b]].push_back(
+        relationship
+    )
 
 
 func relationships() -> Dictionary:
     return _relationships
+
+
+func entity_relationships(entity_a: StringName, entity_b: StringName) -> Array:
+    return _entity_relationships_map[[entity_a, entity_b]]
 
 
 func instruction_add(name: StringName, args: Array) -> void:
