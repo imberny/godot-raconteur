@@ -39,12 +39,12 @@ func test_schema():
 	var tags := schema.tags()
 	assert_eq(tags, [&"stolen"])
 
-	schema.relationship_add(&"owns", &"character", &"item")
-	schema.relationship_add(&"knows", &"character", &"character", &"relation")
-	schema.relationship_add(&"knows", &"character", &"item")
-	assert_eq(schema.relationships_get_between(&"character", &"item"), [&"owns", &"knows"])
-	assert_eq(schema.relationship_get(&"knows", &"character", &"item").qualifier_property, &"")
-	assert_eq(schema.relationship_get(&"knows", &"character", &"character").qualifier_property, &"relation")
+	schema.relationship_descriptor_add(&"character", &"owns", &"item")
+	schema.relationship_descriptor_add(&"character", &"knows", &"character", &"relation")
+	schema.relationship_descriptor_add(&"character", &"knows", &"item")
+	assert_eq(schema.relationship_descriptors_get_between(&"character", &"item"), [&"owns", &"knows"])
+	assert_eq(schema.relationship_descriptor_get(&"character", &"knows", &"item").qualifier_property, &"")
+	assert_eq(schema.relationship_descriptor_get(&"character", &"knows", &"character").qualifier_property, &"relation")
 
 	var speak_callback := func(_speaker: String, _listener: String, _speech: String): pass
 	var invalid_callback := func(_first: String, _second: String): pass

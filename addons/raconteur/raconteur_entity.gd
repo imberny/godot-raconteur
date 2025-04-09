@@ -1,9 +1,9 @@
-class_name RaconteurEntity
-
+class_name RaconteurEntity extends Resource
 
 var _key: StringName
 var _type: StringName
 var _properties: Dictionary = {}
+var _tags: Array[StringName] = []
 
 
 static func validate(schema: RaconteurSchema, key: StringName, type: StringName, properties: Dictionary) -> Array:
@@ -34,3 +34,21 @@ func key() -> StringName:
 
 func properties() -> Dictionary:
     return _properties
+
+
+func tags() -> Array[StringName]:
+    return _tags
+
+
+func tag_has(tag: StringName) -> bool:
+    return _tags.has(tag)
+
+
+func tag_add(tag: StringName) -> void:
+    if not _tags.has(tag):
+        _tags.append(tag)
+
+
+func tag_remove(tag: StringName) -> void:
+    if _tags.has(tag):
+        _tags.erase(tag)
