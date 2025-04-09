@@ -76,7 +76,7 @@ func relationship_add(
 
 	if not _relationships.has([entity_key_a, entity_key_b]):
 		_relationships[[entity_key_a, entity_key_b]] = {}
-	_relationships[[entity_key_a, entity_key_b]][relationship_name] = RaconteurRelationship.new(relationship_name, entity_key_a, entity_key_b, qualifier_value)
+	_relationships[[entity_key_a, entity_key_b]][relationship_name] = RaconteurRelationship.new(entity_key_a, relationship_name, entity_key_b, qualifier_value)
 	return []
 
 

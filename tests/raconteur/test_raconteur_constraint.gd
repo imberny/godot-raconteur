@@ -5,7 +5,7 @@ func world_setup() -> RaconteurWorld:
 	var schema := RaconteurSchema.new()
 	schema.property_add(&"name", RaconteurProperty.Type.STRING)
 	schema.entity_add(&"character", [&"name"])
-	schema.relationship_descriptor_add(&"knows", &"character", &"character")
+	schema.relationship_descriptor_add(&"character", &"knows", &"character")
 	schema.tag_add(&"pretty")
 
 	var world := RaconteurWorld.new(schema)
@@ -31,4 +31,7 @@ func test_constraint_tag():
 
 func test_constraint_relationship():
 	var world := world_setup()
-	assert_true(true)
+
+	var relationship_constraint := RaconteurConstraintHasRelationship.new(&"woman", &"knows", &"bus driver")
+	var binds: Dictionary[StringName, StringName] = {&"woman": &"alice", &"bus driver": &"bob"}
+	assert_true(relationship_constraint.is_satisfied(world, binds))

@@ -7,14 +7,14 @@ var relationship: StringName
 var qualifier_property: StringName
 
 
-func _init(alias_a_: StringName, alias_b_: StringName, relationship_: StringName, qualifier_property_: StringName = &"") -> void:
-    alias_a = alias_a_
-    alias_b = alias_b_
-    relationship = relationship_
-    qualifier_property = qualifier_property_
+func _init(alias_a_: StringName, relationship_: StringName, alias_b_: StringName, qualifier_property_: StringName = &"") -> void:
+	alias_a = alias_a_
+	alias_b = alias_b_
+	relationship = relationship_
+	qualifier_property = qualifier_property_
 
 
 func is_satisfied(world: RaconteurWorld, binds: Dictionary[StringName, StringName]) -> bool:
-    var entity_a_key := binds[alias_a]
-    var entity_b_key := binds[alias_b]
-    return world.relationship_has(entity_a_key, entity_b_key, relationship, qualifier_property)
+	var entity_a_key := binds[alias_a]
+	var entity_b_key := binds[alias_b]
+	return world.relationship_has(entity_a_key, relationship, entity_b_key, qualifier_property)
