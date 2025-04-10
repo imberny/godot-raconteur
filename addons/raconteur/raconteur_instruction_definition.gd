@@ -1,4 +1,4 @@
-class_name RaconteurInstruction
+class_name RaconteurInstructionDefinition
 
 var name: String
 var args: Array
@@ -10,5 +10,5 @@ func _init(name_: String, args_: Array) -> void:
 	args = args_
 
 
-func is_eq(other: RaconteurInstruction) -> bool:
+func is_eq(other: RaconteurInstructionDefinition) -> bool:
 	return name == other.name and args == other.args and callback == other.callback

@@ -70,7 +70,7 @@ func relationship_add(
 ) -> Array:
 	var entity_type_a := _entities[entity_key_a].type()
 	var entity_type_b := _entities[entity_key_b].type()
-	var errors := _schema.relationship_descriptor_validate(entity_type_a, relationship_name, entity_type_b, qualifier_value)
+	var errors := _schema.relationship_definition_validate(entity_type_a, relationship_name, entity_type_b, qualifier_value)
 	if not errors.is_empty():
 		return errors
 

@@ -12,8 +12,8 @@ func world_setup() -> RaconteurWorld:
 	schema.property_add(&"wealth", RaconteurProperty.Type.ENUM, &"wealth levels")
 	schema.entity_add(&"character", [&"name", &"gender", &"age", &"wealth"])
 	schema.entity_add(&"city", [&"name"])
-	schema.relationship_descriptor_add(&"character", &"knows", &"character", &"friendliness")
-	schema.relationship_descriptor_add(&"character", &"in", &"city")
+	schema.relationship_definition_add(&"character", &"knows", &"character", &"friendliness")
+	schema.relationship_definition_add(&"character", &"in", &"city")
 	schema.tag_add(&"pretty")
 
 	var world := RaconteurWorld.new(schema)

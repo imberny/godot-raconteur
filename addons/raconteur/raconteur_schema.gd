@@ -6,9 +6,9 @@ var _enums: Dictionary[StringName, Array] = {}
 var _properties: Dictionary[StringName, RaconteurProperty] = {}
 var _entities: Dictionary[StringName, Array] = {}
 var _tags: Array = []
-var _relationship_descriptors: Dictionary[StringName, Dictionary] = {}
+var _relationship_definitions: Dictionary[StringName, Dictionary] = {}
 var _entity_relationships_map: Dictionary[Array, Array] = {}
-var _instructions: Dictionary[StringName, RaconteurInstruction] = {}
+var _instruction_definitions: Dictionary[StringName, RaconteurInstructionDefinition] = {}
 var _global_entities: Dictionary[StringName, StringName] = {}
 
 
@@ -95,16 +95,16 @@ func tags() -> Array:
 
 
 ## Adds a relationship between two entities with an optional qualifier property.
-func relationship_descriptor_add(
+func relationship_definition_add(
 	entity_a: StringName,
 	relationship_name: StringName,
 	entity_b: StringName,
 	qualifier_enum := &"",
 ) -> void:
-	if not _relationship_descriptors.has(relationship_name):
-		_relationship_descriptors[relationship_name] = {}
-	var relationship := _relationship_descriptors[relationship_name]
-	relationship[[entity_a, entity_b]] = RaconteurRelationshipDescriptor.new(entity_a, relationship_name, entity_b, qualifier_enum)
+	if not _relationship_definitions.has(relationship_name):
+		_relationship_definitions[relationship_name] = {}
+	var relationship := _relationship_definitions[relationship_name]
+	relationship[[entity_a, entity_b]] = RaconteurRelationshipDefinition.new(entity_a, relationship_name, entity_b, qualifier_enum)
 	if not _entity_relationships_map.has([entity_a, entity_b]):
 		_entity_relationships_map[[entity_a, entity_b]] = []
 	_entity_relationships_map[[entity_a, entity_b]].append(
@@ -114,18 +114,18 @@ func relationship_descriptor_add(
 
 ## Returns a dictionary of relationship names to a dictionary of entity pairs to their corresponding RaconteurRelationship objects.
 ## { relationship_name: { [entity_a, entity_b]: RaconteurRelationship } }
-func relationship_descriptors() -> Dictionary:
-	return _relationship_descriptors
+func relationship_definitions() -> Dictionary:
+	return _relationship_definitions
 
 
 ## Returns an array of relationship names between two entities.
-func relationship_descriptors_get_between(entity_a: StringName, entity_b: StringName) -> Array:
+func relationship_definitions_get_between(entity_a: StringName, entity_b: StringName) -> Array:
 	return _entity_relationships_map.get([entity_a, entity_b], [])
 
 
 ## Returns a specific RaconteurRelationship object between two entities.
-func relationship_descriptor_get(entity_a: StringName, relationship_name: StringName, entity_b: StringName) -> RaconteurRelationshipDescriptor:
-	var relationships: Dictionary = _relationship_descriptors.get(relationship_name, {})
+func relationship_definition_get(entity_a: StringName, relationship_name: StringName, entity_b: StringName) -> RaconteurRelationshipDefinition:
+	var relationships: Dictionary = _relationship_definitions.get(relationship_name, {})
 	if relationships.is_empty():
 		return null
 	
@@ -133,9 +133,9 @@ func relationship_descriptor_get(entity_a: StringName, relationship_name: String
 
 
 ## Returns a list of errors in the described relationship.
-func relationship_descriptor_validate(entity_type_a: StringName, relationship_name: StringName, entity_type_b: StringName, qualifier_value: StringName) -> Array:
+func relationship_definition_validate(entity_type_a: StringName, relationship_name: StringName, entity_type_b: StringName, qualifier_value: StringName) -> Array:
 	var errors := []
-	var relationship: RaconteurRelationshipDescriptor = relationship_descriptor_get(entity_type_a, relationship_name, entity_type_b)
+	var relationship: RaconteurRelationshipDefinition = relationship_definition_get(entity_type_a, relationship_name, entity_type_b)
 	if not relationship:
 		errors.append("Relationship '%s' between '%s' and '%s' not found" % [relationship_name, entity_type_a, entity_type_b])
 		return errors
@@ -146,32 +146,32 @@ func relationship_descriptor_validate(entity_type_a: StringName, relationship_na
 	return errors
 
 
-## Adds a new instruction to the schema with the given name and arguments.
-func instruction_add(name: StringName, args: Array) -> void:
-	_instructions[name] = RaconteurInstruction.new(name, args)
+## Adds a new instruction definition to the schema with the given name and arguments.
+func instruction_definition_add(name: StringName, args: Array) -> void:
+	_instruction_definitions[name] = RaconteurInstructionDefinition.new(name, args)
 
 
 ## Sets a callback for the specified instruction.
-func instruction_set_callback(name: StringName, callback: Callable) -> String:
-	var instruction = _instructions.get(name, null)
+func instruction_definition_set_callback(name: StringName, callback: Callable) -> String:
+	var instruction = _instruction_definitions.get(name, null)
 	if not instruction:
-		return "Instruction '%s' not found" % name
+		return "Instruction definition '%s' not found" % name
 		
 
 	if len(instruction.args) != callback.get_argument_count():
 		return \
-			"Argument count mismatch for instruction callback '%s': expected %d, got %d" \
+			"Argument count mismatch for instruction definition callback '%s': expected %d, got %d" \
 			% [name, len(instruction.args), callback.get_argument_count()]
 
 	instruction.callback = callback
 	return ""
 
 
-## Returns a dictionary of instruction names to their corresponding RaconteurInstruction objects.
-func instructions() -> Dictionary:
-	return _instructions
+## Returns a dictionary of instruction names to their corresponding RaconteurInstructionDefinition objects.
+func instruction_definitions() -> Dictionary:
+	return _instruction_definitions
 
 
-## Returns a specific RaconteurInstruction object.
-func instruction_get(name: StringName) -> RaconteurInstruction:
-	return _instructions.get(name, null)
+## Returns a specific RaconteurInstructionDefinition object.
+func instruction_definition_get(name: StringName) -> RaconteurInstructionDefinition:
+	return _instruction_definitions.get(name, null)
