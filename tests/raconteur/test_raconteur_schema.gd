@@ -43,8 +43,8 @@ func test_schema():
 	schema.relationship_descriptor_add(&"character", &"knows", &"character", &"relation")
 	schema.relationship_descriptor_add(&"character", &"knows", &"item")
 	assert_eq(schema.relationship_descriptors_get_between(&"character", &"item"), [&"owns", &"knows"])
-	assert_eq(schema.relationship_descriptor_get(&"character", &"knows", &"item").qualifier_property, &"")
-	assert_eq(schema.relationship_descriptor_get(&"character", &"knows", &"character").qualifier_property, &"relation")
+	assert_eq(schema.relationship_descriptor_get(&"character", &"knows", &"item").qualifier_enum, &"")
+	assert_eq(schema.relationship_descriptor_get(&"character", &"knows", &"character").qualifier_enum, &"relation")
 
 	var speak_callback := func(_speaker: String, _listener: String, _speech: String): pass
 	var invalid_callback := func(_first: String, _second: String): pass

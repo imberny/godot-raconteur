@@ -89,6 +89,13 @@ func relationship_has(entity_key_a: StringName, relationship_name: StringName, e
 	return ok
 
 
+func relationship_get(entity_key_a: StringName, relationship_name: StringName, entity_key_b: StringName) -> RaconteurRelationship:
+	if not relationship_has(entity_key_a, relationship_name, entity_key_b):
+		return null
+	
+	return _relationships[[entity_key_a, entity_key_b]].get(relationship_name, null)
+
+
 ## Adds a global entity to the world with the given name and type.
 ## A global entity is one that is always present in the narration. Its key should be all caps.
 func global_entity_add(entity_type: StringName, key: StringName, properties: Dictionary) -> Array:

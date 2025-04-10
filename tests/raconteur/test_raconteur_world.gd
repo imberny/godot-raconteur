@@ -7,7 +7,7 @@ func test_world():
 	schema.property_add(&"name", RaconteurProperty.Type.STRING)
 	schema.entity_add(&"character", [&"name"])
 	schema.entity_add(&"item", [&"name"])
-	schema.relationship_descriptor_add(&"character", &"knows", &"character")
+	schema.relationship_descriptor_add(&"character", &"knows", &"character", &"relation")
 	schema.relationship_descriptor_add(&"character", &"owns", &"item")
 	schema.tag_add(&"pretty")
 

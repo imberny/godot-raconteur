@@ -99,12 +99,12 @@ func relationship_descriptor_add(
 	entity_a: StringName,
 	relationship_name: StringName,
 	entity_b: StringName,
-	qualifier_property := &"",
+	qualifier_enum := &"",
 ) -> void:
 	if not _relationship_descriptors.has(relationship_name):
 		_relationship_descriptors[relationship_name] = {}
 	var relationship := _relationship_descriptors[relationship_name]
-	relationship[[entity_a, entity_b]] = RaconteurRelationshipDescriptor.new(entity_a, relationship_name, entity_b, qualifier_property)
+	relationship[[entity_a, entity_b]] = RaconteurRelationshipDescriptor.new(entity_a, relationship_name, entity_b, qualifier_enum)
 	if not _entity_relationships_map.has([entity_a, entity_b]):
 		_entity_relationships_map[[entity_a, entity_b]] = []
 	_entity_relationships_map[[entity_a, entity_b]].append(
@@ -139,7 +139,7 @@ func relationship_descriptor_validate(entity_type_a: StringName, relationship_na
 	if not relationship:
 		errors.append("Relationship '%s' between '%s' and '%s' not found" % [relationship_name, entity_type_a, entity_type_b])
 		return errors
-	if not relationship.qualifier_property == &"" and not qualifier_value:
+	if not relationship.qualifier_enum == &"" and not qualifier_value:
 		errors.append("Qualifier value required for relationship '%s'" % relationship_name)
 	var relationship_errors := relationship.validate(self, entity_type_a, entity_type_b, qualifier_value)
 	errors.append_array(relationship_errors)
