@@ -14,10 +14,10 @@ func test_beat():
 
 	var start_node := beat.scenario_node_create()
 	beat.scenario_set_start_node(start_node.id)
-	start_node.name = &"start"
+	start_node.label = &"start"
 	start_node.constraint_add(RaconteurConstraintHasTag.new(&"player", &"clever"))
 	var second_node := beat.scenario_node_create()
-	second_node.name = &"second"
+	second_node.label = &"second"
 	var greetings_line := RaconteurLine.new()
 	greetings_line.label = &"greetings"
 	greetings_line.content = "Hello my fellow!"

@@ -2,7 +2,7 @@ class_name RaconteurScenarioNode extends Resource
 
 
 @export var id: int
-@export var name: StringName
+@export var label: StringName
 @export var lines: Array[RaconteurLine]
 @export var constraints: Array[RaconteurConstraint]
 @export var next: Array[RaconteurScenarioNode]
