@@ -33,8 +33,11 @@ func enum_validate(name: StringName, value: StringName) -> String:
 
 
 ## Adds a new property to the schema with the given name and type.
-func property_add(name: StringName, type: RaconteurProperty.Type, enum_name := &"") -> void:
+func property_add(name: StringName, type: RaconteurProperty.Type, enum_name := &"") -> String:
+	if RaconteurProperty.Type.ENUM == type and not _enums.has(enum_name):
+		return "Enum '%s' not found" % enum_name
 	_properties[name] = RaconteurProperty.new(type, enum_name)
+	return ""
 
 
 ## Returns a dictionary of property names to their types.

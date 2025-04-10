@@ -36,6 +36,10 @@ func properties() -> Dictionary:
     return _properties
 
 
+func property_value(property_name: StringName) -> Variant:
+    return _properties.get(property_name, null)
+
+
 func tags() -> Array[StringName]:
     return _tags
 

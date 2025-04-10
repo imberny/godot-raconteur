@@ -20,7 +20,7 @@ func test_schema():
 	assert_ne(schema.enum_validate(relation_enum, &"invalid_value"), "") # invalid
 
 	schema.property_add(&"name", RaconteurProperty.Type.STRING)
-	schema.property_add(&"quality", RaconteurProperty.Type.ENUM, &"quality")
+	assert_eq(schema.property_add(&"quality", RaconteurProperty.Type.ENUM, &"quality"), "")
 	schema.property_add(&"speech", RaconteurProperty.Type.STRING)
 	assert_eq(schema.property_get(&"name").type(), RaconteurProperty.Type.STRING)
 	assert_eq(schema.property_get(&"quality").type(), RaconteurProperty.Type.ENUM)

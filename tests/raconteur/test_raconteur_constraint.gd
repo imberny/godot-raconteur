@@ -3,14 +3,29 @@ extends GutTest
 
 func world_setup() -> RaconteurWorld:
 	var schema := RaconteurSchema.new()
+	schema.enum_add(&"genders", [&"male", &"female"])
+	schema.enum_add(&"wealth levels", [&"destitute", &"poor", &"well off", &"rich", &"opulent"])
 	schema.property_add(&"name", RaconteurProperty.Type.STRING)
-	schema.entity_add(&"character", [&"name"])
+	schema.property_add(&"gender", RaconteurProperty.Type.ENUM, &"genders")
+	schema.property_add(&"age", RaconteurProperty.Type.INT)
+	schema.property_add(&"wealth", RaconteurProperty.Type.ENUM, &"wealth levels")
+	schema.entity_add(&"character", [&"name", &"gender", &"age", &"wealth"])
 	schema.relationship_descriptor_add(&"character", &"knows", &"character")
 	schema.tag_add(&"pretty")
 
 	var world := RaconteurWorld.new(schema)
-	world.entity_add(&"character", &"alice", {"name": &"Alice"})
-	world.entity_add(&"character", &"bob", {"name": &"Bob"})
+	world.entity_add(&"character", &"alice", {
+		&"name": &"Alice",
+		&"gender": &"female",
+		&"age": 30,
+		&"wealth": &"rich",
+	})
+	world.entity_add(&"character", &"bob", {
+		"name": &"Bob",
+		&"gender": &"male",
+		"age": 25,
+		"wealth": &"poor",
+	})
 	world.relationship_add(&"alice", &"knows", &"bob")
 
 	return world
@@ -35,3 +50,38 @@ func test_constraint_relationship():
 	var relationship_constraint := RaconteurConstraintHasRelationship.new(&"woman", &"knows", &"bus driver")
 	var binds: Dictionary[StringName, StringName] = {&"woman": &"alice", &"bus driver": &"bob"}
 	assert_true(relationship_constraint.is_satisfied(world, binds))
+
+
+func test_constraint_compare():
+	var world := world_setup()
+
+	var binds: Dictionary[StringName, StringName] = {
+		&"woman": &"alice",
+		&"man": &"bob",
+	}
+
+	var equals_constraint := RaconteurConstraintCompare.new(&"woman", &"gender", RaconteurConstraintCompare.Operator.EQUALS, &"female")
+	assert_true(equals_constraint.is_satisfied(world, binds))
+
+	var greater_than_constraint := RaconteurConstraintCompare.new(&"woman", &"age", RaconteurConstraintCompare.Operator.GREATER_THAN, 20)
+	assert_true(greater_than_constraint.is_satisfied(world, binds))
+
+	var greater_than_other_property_constraint := RaconteurConstraintCompare.new(
+		&"woman", &"age", RaconteurConstraintCompare.Operator.GREATER_THAN, &"man", &"age"
+	)
+	assert_true(greater_than_other_property_constraint.is_satisfied(world, binds))
+
+
+func test_constraint_set():
+	var world := world_setup()
+
+	var binds: Dictionary[StringName, StringName] = {
+		&"rich woman": &"alice",
+		&"poor man": &"bob",
+	}
+
+	var one_of_constraint := RaconteurConstraintSet.new(&"rich woman", &"wealth", RaconteurConstraintSet.Operator.ONE_OF, [&"rich", &"opulent"])
+	assert_true(one_of_constraint.is_satisfied(world, binds))
+
+	var none_of_constraint := RaconteurConstraintSet.new(&"poor man", &"wealth", RaconteurConstraintSet.Operator.NONE_OF, [&"well off", &"rich", &"opulent"])
+	assert_true(none_of_constraint.is_satisfied(world, binds))
