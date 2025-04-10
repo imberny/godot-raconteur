@@ -12,6 +12,11 @@ var _instruction_definitions: Dictionary[StringName, RaconteurInstructionDefinit
 var _global_entities: Dictionary[StringName, StringName] = {}
 
 
+## Checks if the schema contains an enum with the given name.
+func enum_has(name: StringName) -> bool:
+	return _enums.has(name)
+
+
 ## Adds a new enum to the schema with the given name and values.
 func enum_add(name: StringName, values: Array) -> void:
 	_enums[name] = values
@@ -147,8 +152,20 @@ func relationship_definition_validate(entity_type_a: StringName, relationship_na
 
 
 ## Adds a new instruction definition to the schema with the given name and arguments.
-func instruction_definition_add(name: StringName, args: Array) -> void:
-	_instruction_definitions[name] = RaconteurInstructionDefinition.new(name, args)
+func instruction_definition_add(name: StringName, args: Array[StringName]) -> String:
+	# TODO: add additional info on args, mainly: is entity, is line, is enum
+	var arg_types: Array[RaconteurInstructionDefinition.ArgType] = []
+	for arg in args:
+		if entity_has(arg):
+			arg_types.append(RaconteurInstructionDefinition.ArgType.ENTITY)
+		elif enum_has(arg):
+			arg_types.append(RaconteurInstructionDefinition.ArgType.ENUM)
+		elif arg.begins_with("[") and arg.ends_with("]"):
+			arg_types.append(RaconteurInstructionDefinition.ArgType.LINE)
+		else:
+			return "Invalid argument: %s." % arg
+	_instruction_definitions[name] = RaconteurInstructionDefinition.new(name, args, arg_types)
+	return ""
 
 
 ## Sets a callback for the specified instruction.

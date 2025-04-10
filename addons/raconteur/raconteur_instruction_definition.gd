@@ -1,13 +1,21 @@
 class_name RaconteurInstructionDefinition
 
+enum ArgType {
+	ENTITY,
+	ENUM,
+	LINE,
+}
+
 var name: String
-var args: Array
+var args: Array[StringName]
+var arg_types: Array[ArgType]
 var callback: Callable
 
 
-func _init(name_: String, args_: Array) -> void:
+func _init(name_: String, args_: Array[StringName], arg_types_: Array[ArgType]) -> void:
 	name = name_
 	args = args_
+	arg_types = arg_types_
 
 
 func is_eq(other: RaconteurInstructionDefinition) -> bool:

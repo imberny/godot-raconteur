@@ -49,10 +49,14 @@ func test_schema():
 	var speak_callback := func(_speaker: String, _listener: String, _speech: String): pass
 	var invalid_callback := func(_first: String, _second: String): pass
 	var speak_instruction := &"speak"
-	var speak_args := [&"character", &"character", &"speech"]
-	schema.instruction_definition_add(speak_instruction, speak_args)
+	var speak_args: Array[StringName] = [&"character", &"character", &"[speech]"]
+	assert_eq(schema.instruction_definition_add(speak_instruction, speak_args), "")
 	assert_ne(schema.instruction_definition_set_callback(speak_instruction, invalid_callback), "") # invalid
 	assert_eq(schema.instruction_definition_set_callback(speak_instruction, speak_callback), "")
-	var expected_instruction := RaconteurInstructionDefinition.new(speak_instruction, speak_args)
+	var expected_instruction := RaconteurInstructionDefinition.new(speak_instruction, speak_args, [
+		RaconteurInstructionDefinition.ArgType.ENTITY,
+		RaconteurInstructionDefinition.ArgType.ENTITY,
+		RaconteurInstructionDefinition.ArgType.LINE,
+	] as Array[RaconteurInstructionDefinition.ArgType])
 	expected_instruction.callback = speak_callback
 	assert_true(schema.instruction_definition_get(speak_instruction).is_eq(expected_instruction))
