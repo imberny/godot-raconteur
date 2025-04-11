@@ -2,7 +2,7 @@ extends GutTest
 
 
 func test_beat():
-    var beat := RaconteurBeat.new()
+    var beat := RaconteurBeatDefinition.new()
 
     beat.alias_add(&"merchant", &"character")
 

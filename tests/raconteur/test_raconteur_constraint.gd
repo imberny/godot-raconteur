@@ -5,7 +5,7 @@ const COMMON: GDScript = preload("res://tests/raconteur/common.gd")
 
 func test_constraint_tag():
     var schema: RaconteurSchema = COMMON.schema()
-    var world: RaconteurWorld = COMMON.world(schema)
+    var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
     
     var tag_constraint := RaconteurConstraintHasTag.new(&"pretty woman", &"pretty")
     var binds: Dictionary[StringName, StringName] = {&"pretty woman": &"alice"}
@@ -19,7 +19,7 @@ func test_constraint_tag():
 
 func test_constraint_relationship():
     var schema: RaconteurSchema = COMMON.schema()
-    var world: RaconteurWorld = COMMON.world(schema)
+    var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
 
     var relationship_constraint := RaconteurConstraintHasRelationship.new(&"woman", &"knows", &"bus driver", &"neutral")
     var binds: Dictionary[StringName, StringName] = {&"woman": &"alice", &"bus driver": &"bob"}
@@ -28,7 +28,7 @@ func test_constraint_relationship():
 
 func test_constraint_compare():
     var schema: RaconteurSchema = COMMON.schema()
-    var world: RaconteurWorld = COMMON.world(schema)
+    var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
 
     var binds: Dictionary[StringName, StringName] = {
         &"woman": &"alice",
@@ -49,7 +49,7 @@ func test_constraint_compare():
 
 func test_constraint_set():
     var schema: RaconteurSchema = COMMON.schema()
-    var world: RaconteurWorld = COMMON.world(schema)
+    var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
 
     var binds: Dictionary[StringName, StringName] = {
         &"rich woman": &"alice",
@@ -65,7 +65,7 @@ func test_constraint_set():
 
 func test_constraint_same_relationship():
     var schema: RaconteurSchema = COMMON.schema()
-    var world: RaconteurWorld = COMMON.world(schema)
+    var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
 
     var binds: Dictionary[StringName, StringName] = {
         &"customer": &"alice",

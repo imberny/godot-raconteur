@@ -24,7 +24,7 @@ static func schema() -> RaconteurSchema:
     return schema_
 
 
-static func world(schema_) -> RaconteurWorld:
+static func alice_and_bob_world(schema_) -> RaconteurWorld:
     var world_ := RaconteurWorld.new(schema_)
     world_.entity_add(&"character", &"alice", {
         &"name": &"Alice",
@@ -56,10 +56,10 @@ static func world(schema_) -> RaconteurWorld:
     return world_
 
 
-static func beats() -> Array[RaconteurBeat]:
-    var beats_list: Array[RaconteurBeat] = []
+static func beat_definitions() -> Array[RaconteurBeatDefinition]:
+    var beats_list: Array[RaconteurBeatDefinition] = []
 
-    var messenger_beat := RaconteurBeat.new()
+    var messenger_beat := RaconteurBeatDefinition.new()
     messenger_beat.alias_add(&"messenger", &"character")
     messenger_beat.alias_add(&"wealthy woman", &"character")
     messenger_beat.constraint_add(
@@ -68,7 +68,7 @@ static func beats() -> Array[RaconteurBeat]:
         )
     )
     messenger_beat.constraint_add(RaconteurConstraintSet.new(
-        &"wealth woman", &"wealth", RaconteurConstraintSet.Operator.ONE_OF, [&"rich", &"opulent"]
+        &"wealthy woman", &"wealth", RaconteurConstraintSet.Operator.ONE_OF, [&"rich", &"opulent"]
     ))
     var messenger_start_node := messenger_beat.scenario_node_create()
     messenger_beat.scenario_set_start_node(messenger_start_node.id)
@@ -96,4 +96,11 @@ static func beats() -> Array[RaconteurBeat]:
     refuse_node.instruction_add(&"speak", [&"PROTAGONIST", &"messenger", &"refuse"])
 
     beats_list.append(messenger_beat)
+
+    var non_matching_beat := RaconteurBeatDefinition.new()
+    non_matching_beat.alias_add(&"no match", &"character")
+    non_matching_beat.constraint_add(RaconteurConstraintHasTag.new(&"no match", &"unmatched tag"))
+
+    beats_list.append(non_matching_beat)
+
     return beats_list

@@ -16,6 +16,10 @@ func _init(schema: RaconteurSchema) -> void:
 	_schema = schema
 
 
+func entities() -> Array[RaconteurEntity]:
+	return _entities.values() as Array[RaconteurEntity]
+
+
 func entity_get(key: StringName) -> RaconteurEntity:
 	return _entities.get(key, null)
 
