@@ -16,7 +16,7 @@ class AliasedInstruction:
 @export var label: StringName
 @export var lines: Array[RaconteurLine]
 @export var constraints: Array[RaconteurConstraint]
-@export var next: Array[RaconteurScenarioNode]
+@export var next: Array[int]
 @export var instructions: Array[AliasedInstruction]
 
 
@@ -32,8 +32,8 @@ func constraint_add(new_constraint: RaconteurConstraint) -> void:
     constraints.append(new_constraint)
 
 
-func next_add(next_node: RaconteurScenarioNode) -> void:
-    next.append(next_node)
+func next_add(next_id: int) -> void:
+    next.append(next_id)
 
 
 func instruction_add(instruction_name: StringName, aliased_args: Array) -> void:

@@ -70,8 +70,11 @@ func entity_has(name: StringName) -> bool:
 
 
 ## Adds a new entity type with the given name and properties.
-func entity_add(name: StringName, entity_properties: Array) -> void:
+func entity_add(name: StringName, entity_properties: Array) -> String:
+	if &"line" == name:
+		return "'line' is a reserved keyword and cannot be used as an entity type."
 	_entities[name] = entity_properties
+	return ""
 
 
 ## Returns a dictionary of entity names to their properties.
@@ -156,12 +159,12 @@ func instruction_definition_add(name: StringName, args: Array[StringName]) -> St
 	# TODO: add additional info on args, mainly: is entity, is line, is enum
 	var arg_types: Array[RaconteurInstructionDefinition.ArgType] = []
 	for arg in args:
-		if entity_has(arg):
+		if &"line" == arg:
+			arg_types.append(RaconteurInstructionDefinition.ArgType.LINE)
+		elif entity_has(arg):
 			arg_types.append(RaconteurInstructionDefinition.ArgType.ENTITY)
 		elif enum_has(arg):
 			arg_types.append(RaconteurInstructionDefinition.ArgType.ENUM)
-		elif arg.begins_with("[") and arg.ends_with("]"):
-			arg_types.append(RaconteurInstructionDefinition.ArgType.LINE)
 		else:
 			return "Invalid argument: %s." % arg
 	_instruction_definitions[name] = RaconteurInstructionDefinition.new(name, args, arg_types)

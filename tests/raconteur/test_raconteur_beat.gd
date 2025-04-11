@@ -22,7 +22,7 @@ func test_beat():
     greetings_line.label = &"greetings"
     greetings_line.content = "Hello my fellow!"
     second_node.line_add(greetings_line)
-    start_node.next_add(second_node)
+    start_node.next_add(second_node.id)
     
     start_node.instruction_add(&"speak", [&"player", &"[greetings]"])
 

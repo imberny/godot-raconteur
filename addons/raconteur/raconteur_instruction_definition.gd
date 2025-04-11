@@ -1,3 +1,5 @@
+## An instance of this class defines a raconteur instruction.
+## Think of instructions as your own domain specific language for your writers.
 class_name RaconteurInstructionDefinition
 
 enum ArgType {

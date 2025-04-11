@@ -21,13 +21,14 @@ func test_schema():
 
 	schema.property_add(&"name", RaconteurProperty.Type.STRING)
 	assert_eq(schema.property_add(&"quality", RaconteurProperty.Type.ENUM, &"quality"), "")
-	schema.property_add(&"speech", RaconteurProperty.Type.STRING)
 	assert_eq(schema.property_get(&"name").type(), RaconteurProperty.Type.STRING)
 	assert_eq(schema.property_get(&"quality").type(), RaconteurProperty.Type.ENUM)
 	assert_eq(schema.property_get(&"quality").enum_name(), &"quality")
 
-	schema.entity_add(&"item", [&"name", &"quality"])
-	schema.entity_add(&"character", [&"name"])
+	assert_eq(schema.entity_add(&"item", [&"name", &"quality"]), "")
+	assert_eq(schema.entity_add(&"character", [&"name"]), "")
+	assert_ne(schema.entity_add(&"line", []), "")
+
 	assert_eq(schema.entity_get(&"item"), [&"name", &"quality"])
 	assert_eq(schema.entity_get(&"character"), [&"name"])
 	var errors := RaconteurEntity.validate(schema, &"bad_sword", &"item", {&"name": "Sword", &"quality": &"shoddy"})
@@ -49,7 +50,7 @@ func test_schema():
 	var speak_callback := func(_speaker: String, _listener: String, _speech: String): pass
 	var invalid_callback := func(_first: String, _second: String): pass
 	var speak_instruction := &"speak"
-	var speak_args: Array[StringName] = [&"character", &"character", &"[speech]"]
+	var speak_args: Array[StringName] = [&"character", &"character", &"line"]
 	assert_eq(schema.instruction_definition_add(speak_instruction, speak_args), "")
 	assert_ne(schema.instruction_definition_set_callback(speak_instruction, invalid_callback), "") # invalid
 	assert_eq(schema.instruction_definition_set_callback(speak_instruction, speak_callback), "")
