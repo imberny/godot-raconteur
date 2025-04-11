@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cnlooayf8u5iw"]
+[gd_scene load_steps=2 format=3 uid="uid://cnlooayf8u5iw"]
+
+[ext_resource type="Script" uid="uid://d7jynao5vg3g" path="res://addons/raconteur/editor/graph_edit.gd" id="1_0ojw0"]
 
 [node name="RaconteurEditor" type="Control"]
 layout_mode = 3
@@ -25,7 +27,7 @@ size_flags_vertical = 3
 [node name="GraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-scroll_offset = Vector2(0, -150)
+script = ExtResource("1_0ojw0")
 
 [node name="PlaybackPanel" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
 custom_minimum_size = Vector2(150, 0)
