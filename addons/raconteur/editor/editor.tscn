@@ -24,11 +24,32 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-scroll_offset = Vector2(0, -35)
+
+[node name="GraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 script = ExtResource("1_0ojw0")
+
+[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="NewBeatButton" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "New beat"
+
+[node name="LoadBeatButton" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Load beat"
 
 [node name="PlaybackPanel" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
 custom_minimum_size = Vector2(150, 0)
