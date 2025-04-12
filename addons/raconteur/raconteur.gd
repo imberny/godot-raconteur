@@ -32,11 +32,11 @@ func _try_match_beat(world: RaconteurWorld, definition: RaconteurBeatDefinition)
 	for i in len(alias_list):
 		var alias: StringName = alias_list[i]
 		var alias_entity_type := definition.aliases[alias]
-		var entities := world.entities().duplicate()
+		var entities := world.entities.duplicate()
 		var candidates: Array[StringName] = []
-		for entity in entities:
-			if entity.type() == alias_entity_type:
-				candidates.append(entity.key())
+		for entity in entities.values():
+			if entity.type == alias_entity_type:
+				candidates.append(entity.key)
 		first_pass_candidates[alias] = candidates
 	
 	# Generate all permutations 

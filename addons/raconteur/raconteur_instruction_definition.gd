@@ -1,6 +1,6 @@
 ## An instance of this class defines a raconteur instruction.
 ## Think of instructions as your own domain specific language for your writers.
-class_name RaconteurInstructionDefinition
+class_name RaconteurInstructionDefinition extends Resource
 
 enum ArgType {
 	ENTITY,
@@ -8,9 +8,10 @@ enum ArgType {
 	LINE,
 }
 
-var name: String
-var args: Array[StringName]
-var arg_types: Array[ArgType]
+@export var name: String
+@export var args: Array[StringName]
+@export var arg_types: Array[ArgType]
+
 var callback: Callable
 
 

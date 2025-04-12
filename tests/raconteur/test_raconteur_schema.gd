@@ -10,7 +10,7 @@ func test_schema():
 	var relation_enum := &"relation"
 	var relation_values := [&"friend", &"enemy"]
 	schema.enum_add(relation_enum, relation_values)
-	var enums := schema.enums()
+	var enums := schema.enum_list()
 	assert_eq(enums, {
 		quality_enum: quality_values,
 		relation_enum: relation_values,
@@ -21,9 +21,9 @@ func test_schema():
 
 	schema.property_add(&"name", RaconteurProperty.Type.STRING)
 	assert_eq(schema.property_add(&"quality", RaconteurProperty.Type.ENUM, &"quality"), "")
-	assert_eq(schema.property_get(&"name").type(), RaconteurProperty.Type.STRING)
-	assert_eq(schema.property_get(&"quality").type(), RaconteurProperty.Type.ENUM)
-	assert_eq(schema.property_get(&"quality").enum_name(), &"quality")
+	assert_eq(schema.property_get(&"name").type, RaconteurProperty.Type.STRING)
+	assert_eq(schema.property_get(&"quality").type, RaconteurProperty.Type.ENUM)
+	assert_eq(schema.property_get(&"quality").enum_name, &"quality")
 
 	assert_eq(schema.entity_add(&"item", [&"name", &"quality"]), "")
 	assert_eq(schema.entity_add(&"character", [&"name"]), "")
@@ -37,8 +37,7 @@ func test_schema():
 	assert_false(errors.is_empty())
 
 	schema.tag_add(&"stolen")
-	var tags := schema.tags()
-	assert_eq(tags, [&"stolen"])
+	assert_eq(schema.tags, [&"stolen"])
 
 	schema.relationship_definition_add(&"character", &"owns", &"item")
 	schema.relationship_definition_add(&"character", &"knows", &"character", &"relation")

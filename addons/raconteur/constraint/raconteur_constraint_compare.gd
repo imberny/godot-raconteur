@@ -9,11 +9,11 @@ enum Operator {
 	LESS_THAN_OR_EQUALS,
 }
 
-var alias: StringName
-var property: StringName
-var operator: Operator
-var other: Variant
-var other_property: StringName
+@export var alias: StringName
+@export var property: StringName
+@export var operator: Operator
+@export var other: String
+@export var other_property: StringName
 
 
 func _init(alias_: StringName, property_: StringName, operator_: Operator, other_: Variant, other_property_ := &"") -> void:
@@ -30,7 +30,7 @@ func is_satisfied(world: RaconteurWorld, binds: Dictionary[StringName, StringNam
 	if not entity:
 		return false
 	
-	var value := other
+	var value = other
 	# A non empty other_property means other is an alias.
 	if not other_property.is_empty():
 		var other_entity_key := binds[other]
@@ -40,6 +40,10 @@ func is_satisfied(world: RaconteurWorld, binds: Dictionary[StringName, StringNam
 		value = other_entity.property_value(other_property)
 
 	var property_value: Variant = entity.property_value(property)
+	if typeof(value) != typeof(property_value):
+		match typeof(property_value):
+			TYPE_INT:
+				value = value.to_int()
 	match operator:
 		Operator.EQUALS:
 			return property_value == value

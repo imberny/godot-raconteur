@@ -24,7 +24,7 @@ func test_world():
 
 
 	world.global_entity_add(&"character", &"PROTAGONIST", {})
-	assert_eq(world.global_entity_get(&"PROTAGONIST").type(), &"character")
+	assert_eq(world.global_entity_get(&"PROTAGONIST").type, &"character")
 
 	assert_eq(world.entity_tag(&"alice", &"pretty"), "")
 	assert_true(world.entity_get(&"alice").tag_has(&"pretty"))

@@ -1,23 +1,12 @@
 class_name RaconteurScenarioNode extends Resource
 
 
-class AliasedInstruction:
-    extends Resource
-
-    var name: StringName
-    var args: Array
-
-    func _init(name_: StringName, args_: Array) -> void:
-        name = name_
-        args = args_
-
-
 @export var id: int
 @export var label: StringName
 @export var lines: Array[RaconteurLine]
 @export var constraints: Array[RaconteurConstraint]
 @export var next: Array[int]
-@export var instructions: Array[AliasedInstruction]
+@export var instructions: Array[RaconteurInstructionAliased]
 
 
 func _init(id_: int) -> void:
@@ -37,4 +26,4 @@ func next_add(next_id: int) -> void:
 
 
 func instruction_add(instruction_name: StringName, aliased_args: Array) -> void:
-    instructions.append(AliasedInstruction.new(instruction_name, aliased_args))
+    instructions.append(RaconteurInstructionAliased.new(instruction_name, aliased_args))

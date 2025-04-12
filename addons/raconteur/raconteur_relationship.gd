@@ -1,9 +1,9 @@
 class_name RaconteurRelationship extends Resource
 
-var relationship_name: StringName
-var entity_a: StringName
-var entity_b: StringName
-var qualifier_value: StringName
+@export var relationship_name: StringName
+@export var entity_a: StringName
+@export var entity_b: StringName
+@export var qualifier_value: StringName
 
 
 func _init(entity_a_: StringName, relationship_name_: StringName, entity_b_: StringName, qualifier_value_ := &"") -> void:

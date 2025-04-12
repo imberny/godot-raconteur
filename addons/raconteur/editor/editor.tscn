@@ -27,41 +27,68 @@ size_flags_vertical = 3
 [node name="GraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+scroll_offset = Vector2(0, -35)
 script = ExtResource("1_0ojw0")
 
 [node name="PlaybackPanel" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/HSplitContainer/PlaybackPanel"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="VSplitContainer/HSplitContainer/PlaybackPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Play"
+
 [node name="BottomDrawer" type="PanelContainer" parent="VSplitContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/BottomDrawer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/BottomDrawer"]
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/BottomDrawer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Tabs" type="VBoxContainer" parent="VSplitContainer/BottomDrawer/MarginContainer/HBoxContainer"]
+[node name="Tabs" type="VBoxContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Schema" type="Button" parent="VSplitContainer/BottomDrawer/MarginContainer/HBoxContainer/Tabs"]
+[node name="Schema" type="Button" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 layout_mode = 2
 text = "Schema"
 
-[node name="World" type="Button" parent="VSplitContainer/BottomDrawer/MarginContainer/HBoxContainer/Tabs"]
+[node name="Beats" type="Button" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 layout_mode = 2
-text = "World"
+text = "Beats"
 
-[node name="Beat" type="Button" parent="VSplitContainer/BottomDrawer/MarginContainer/HBoxContainer/Tabs"]
+[node name="World" type="Button" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 layout_mode = 2
-text = "Beat"
+text = "Test world"
 
-[node name="VSeparator" type="VSeparator" parent="VSplitContainer/BottomDrawer/MarginContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+
+[node name="SchemaEditor" type="MarginContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BeatEditor" type="MarginContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WorldEditor" type="MarginContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3

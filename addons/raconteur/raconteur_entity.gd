@@ -1,58 +1,46 @@
 class_name RaconteurEntity extends Resource
 
-var _key: StringName
-var _type: StringName
-var _properties: Dictionary = {}
-var _tags: Array[StringName] = []
+@export var key: StringName
+@export var type: StringName
+@export var properties: Dictionary = {}
+@export var tags: Array[StringName] = []
 
 
-static func validate(schema: RaconteurSchema, key: StringName, type: StringName, properties: Dictionary) -> Array:
-    var errors := []
-    if not schema.entity_has(type):
-        errors.append("Entity type '%s' not found" % type)
-    for property_name in properties.keys():
-        var property_value: Variant = properties[property_name]
-        var error := schema.property_validate(property_name, property_value)
-        if not error.is_empty():
-            errors.append(error)
-    return errors
+static func validate(schema: RaconteurSchema, key_: StringName, type_: StringName, properties: Dictionary) -> Array:
+	var errors := []
+	if not schema.entity_has(type_):
+		errors.append("Entity type '%s' not found" % type_)
+	for property_name in properties.keys():
+		var property_value: Variant = properties[property_name]
+		var error := schema.property_validate(property_name, property_value)
+		if not error.is_empty():
+			errors.append(error)
+	return errors
 
 
-func _init(key: StringName, type: StringName, properties: Dictionary) -> void:
-    _key = key
-    _type = type
-    _properties = properties
+func _init(key_: StringName, type_: StringName, properties_: Dictionary) -> void:
+	key = key_
+	type = type_
+	properties = properties_
 
 
-func type() -> StringName:
-    return _type
-
-
-func key() -> StringName:
-    return _key
-
-
-func properties() -> Dictionary:
-    return _properties
+func property_list() -> Dictionary:
+	return properties
 
 
 func property_value(property_name: StringName) -> Variant:
-    return _properties.get(property_name, null)
-
-
-func tags() -> Array[StringName]:
-    return _tags
+	return properties.get(property_name, null)
 
 
 func tag_has(tag: StringName) -> bool:
-    return _tags.has(tag)
+	return tags.has(tag)
 
 
 func tag_add(tag: StringName) -> void:
-    if not _tags.has(tag):
-        _tags.append(tag)
+	if not tags.has(tag):
+		tags.append(tag)
 
 
 func tag_remove(tag: StringName) -> void:
-    if _tags.has(tag):
-        _tags.erase(tag)
+	if tags.has(tag):
+		tags.erase(tag)

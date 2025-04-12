@@ -2,34 +2,38 @@
 class_name RaconteurSchema extends Resource
 
 
-var _enums: Dictionary[StringName, Array] = {}
-var _properties: Dictionary[StringName, RaconteurProperty] = {}
-var _entities: Dictionary[StringName, Array] = {}
-var _tags: Array = []
-var _relationship_definitions: Dictionary[StringName, Dictionary] = {}
-var _entity_relationships_map: Dictionary[Array, Array] = {}
-var _instruction_definitions: Dictionary[StringName, RaconteurInstructionDefinition] = {}
-var _global_entities: Dictionary[StringName, StringName] = {}
+@export var enums: Dictionary[StringName, Array] = {}
+@export var properties: Dictionary[StringName, RaconteurProperty] = {}
+@export var entities: Dictionary[StringName, Array] = {}
+## Tags are used to mark entities with specific characteristics or states.
+@export var tags: Array = []
+## A dictionary of relationship names to a dictionary of entity pairs to their corresponding RaconteurRelationship objects.
+## { relationship_name: { [entity_a, entity_b]: RaconteurRelationship } }
+@export var relationship_definitions: Dictionary[StringName, Dictionary] = {}
+@export var entity_relationships_map: Dictionary[Array, Array] = {}
+## A dictionary of instruction names to their corresponding RaconteurInstructionDefinition objects.
+@export var instruction_definitions: Dictionary[StringName, RaconteurInstructionDefinition] = {}
+@export var global_entities: Dictionary[StringName, StringName] = {}
 
 
 ## Checks if the schema contains an enum with the given name.
 func enum_has(name: StringName) -> bool:
-	return _enums.has(name)
+	return enums.has(name)
 
 
 ## Adds a new enum to the schema with the given name and values.
 func enum_add(name: StringName, values: Array) -> void:
-	_enums[name] = values
+	enums[name] = values
 
 
 ## Returns a dictionary of enum names to their array of possible StringName values.
-func enums() -> Dictionary:
-	return _enums
+func enum_list() -> Dictionary:
+	return enums
 
 
 ## Validates if the given value is a valid enum value.
 func enum_validate(name: StringName, value: StringName) -> String:
-	var enum_values: Array = _enums.get(name, [])
+	var enum_values: Array = enums.get(name, [])
 	if enum_values.is_empty():
 		return "Enum '%s' not found" % name
 	if not enum_values.has(value):
@@ -39,25 +43,25 @@ func enum_validate(name: StringName, value: StringName) -> String:
 
 ## Adds a new property to the schema with the given name and type.
 func property_add(name: StringName, type: RaconteurProperty.Type, enum_name := &"") -> String:
-	if RaconteurProperty.Type.ENUM == type and not _enums.has(enum_name):
+	if RaconteurProperty.Type.ENUM == type and not enums.has(enum_name):
 		return "Enum '%s' not found" % enum_name
-	_properties[name] = RaconteurProperty.new(type, enum_name)
+	properties[name] = RaconteurProperty.new(type, enum_name)
 	return ""
 
 
 ## Returns a dictionary of property names to their types.
-func properties() -> Dictionary:
-	return _properties
+func property_list() -> Dictionary:
+	return properties
 
 
 ## Returns a RaconteurProperty object for the given property name.
 func property_get(property_name: StringName) -> RaconteurProperty:
-	return _properties.get(property_name, null)
+	return properties.get(property_name, null)
 
 
 ## Validates if the given value is a valid property value.
 func property_validate(property_name: StringName, value: Variant) -> String:
-	var property: RaconteurProperty = _properties.get(property_name, null)
+	var property: RaconteurProperty = properties.get(property_name, null)
 	if not property:
 		return "Property '%s' not found" % property_name
 
@@ -66,40 +70,29 @@ func property_validate(property_name: StringName, value: Variant) -> String:
 
 ## Checks if the schema contains an entity with the given name.
 func entity_has(name: StringName) -> bool:
-	return _entities.has(name)
+	return entities.has(name)
 
 
 ## Adds a new entity type with the given name and properties.
 func entity_add(name: StringName, entity_properties: Array) -> String:
 	if &"line" == name:
 		return "'line' is a reserved keyword and cannot be used as an entity type."
-	_entities[name] = entity_properties
+	entities[name] = entity_properties
 	return ""
-
-
-## Returns a dictionary of entity names to their properties.
-func entities() -> Dictionary:
-	return _entities
 
 
 ## Returns the properties of a specific entity type.
 func entity_get(name: StringName) -> Array:
-	return _entities.get(name, [])
+	return entities.get(name, [])
 
 
 func tag_has(name: StringName) -> bool:
-	return _tags.has(name)
+	return tags.has(name)
 
 
 ## Adds a tag to the schema.
-## Tags are used to mark entities with specific characteristics or states.
 func tag_add(name: StringName) -> void:
-	_tags.append(name)
-
-
-## Returns an array of all tags in the schema.
-func tags() -> Array:
-	return _tags
+	tags.append(name)
 
 
 ## Adds a relationship between two entities with an optional qualifier property.
@@ -109,31 +102,25 @@ func relationship_definition_add(
 	entity_b: StringName,
 	qualifier_enum := &"",
 ) -> void:
-	if not _relationship_definitions.has(relationship_name):
-		_relationship_definitions[relationship_name] = {}
-	var relationship := _relationship_definitions[relationship_name]
+	if not relationship_definitions.has(relationship_name):
+		relationship_definitions[relationship_name] = {}
+	var relationship := relationship_definitions[relationship_name]
 	relationship[[entity_a, entity_b]] = RaconteurRelationshipDefinition.new(entity_a, relationship_name, entity_b, qualifier_enum)
-	if not _entity_relationships_map.has([entity_a, entity_b]):
-		_entity_relationships_map[[entity_a, entity_b]] = []
-	_entity_relationships_map[[entity_a, entity_b]].append(
+	if not entity_relationships_map.has([entity_a, entity_b]):
+		entity_relationships_map[[entity_a, entity_b]] = []
+	entity_relationships_map[[entity_a, entity_b]].append(
 		relationship_name
 	)
 
 
-## Returns a dictionary of relationship names to a dictionary of entity pairs to their corresponding RaconteurRelationship objects.
-## { relationship_name: { [entity_a, entity_b]: RaconteurRelationship } }
-func relationship_definitions() -> Dictionary:
-	return _relationship_definitions
-
-
 ## Returns an array of relationship names between two entities.
 func relationship_definitions_get_between(entity_a: StringName, entity_b: StringName) -> Array:
-	return _entity_relationships_map.get([entity_a, entity_b], [])
+	return entity_relationships_map.get([entity_a, entity_b], [])
 
 
 ## Returns a specific RaconteurRelationship object between two entities.
 func relationship_definition_get(entity_a: StringName, relationship_name: StringName, entity_b: StringName) -> RaconteurRelationshipDefinition:
-	var relationships: Dictionary = _relationship_definitions.get(relationship_name, {})
+	var relationships: Dictionary = relationship_definitions.get(relationship_name, {})
 	if relationships.is_empty():
 		return null
 	
@@ -167,13 +154,13 @@ func instruction_definition_add(name: StringName, args: Array[StringName]) -> St
 			arg_types.append(RaconteurInstructionDefinition.ArgType.ENUM)
 		else:
 			return "Invalid argument: %s." % arg
-	_instruction_definitions[name] = RaconteurInstructionDefinition.new(name, args, arg_types)
+	instruction_definitions[name] = RaconteurInstructionDefinition.new(name, args, arg_types)
 	return ""
 
 
 ## Sets a callback for the specified instruction.
 func instruction_definition_set_callback(name: StringName, callback: Callable) -> String:
-	var instruction = _instruction_definitions.get(name, null)
+	var instruction = instruction_definitions.get(name, null)
 	if not instruction:
 		return "Instruction definition '%s' not found" % name
 		
@@ -187,11 +174,6 @@ func instruction_definition_set_callback(name: StringName, callback: Callable) -
 	return ""
 
 
-## Returns a dictionary of instruction names to their corresponding RaconteurInstructionDefinition objects.
-func instruction_definitions() -> Dictionary:
-	return _instruction_definitions
-
-
 ## Returns a specific RaconteurInstructionDefinition object.
 func instruction_definition_get(name: StringName) -> RaconteurInstructionDefinition:
-	return _instruction_definitions.get(name, null)
+	return instruction_definitions.get(name, null)

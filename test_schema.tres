@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="RaconteurSchema" load_steps=6 format=3 uid="uid://clni2gsymf4br"]
+
+[ext_resource type="Script" uid="uid://4wo2fd3iusa7" path="res://addons/raconteur/raconteur_instruction_definition.gd" id="1_xg7xr"]
+[ext_resource type="Script" uid="uid://6b12k8rydyva" path="res://addons/raconteur/raconteur_property.gd" id="2_3n0ge"]
+[ext_resource type="Script" uid="uid://g5tl1hlpkim2" path="res://addons/raconteur/raconteur_schema.gd" id="3_hu5rb"]
+
+[sub_resource type="Resource" id="Resource_n2h0f"]
+script = ExtResource("2_3n0ge")
+type = 2
+enum_name = &""
+metadata/_custom_type_script = "uid://6b12k8rydyva"
+
+[sub_resource type="Resource" id="Resource_628kl"]
+script = ExtResource("2_3n0ge")
+type = 0
+enum_name = &"wealth"
+metadata/_custom_type_script = "uid://6b12k8rydyva"
+
+[resource]
+script = ExtResource("3_hu5rb")
+enums = Dictionary[StringName, Array]({
+&"wealth": [&"poor", &"rich"]
+})
+properties = Dictionary[StringName, ExtResource("2_3n0ge")]({
+&"age": SubResource("Resource_n2h0f"),
+&"wealth": SubResource("Resource_628kl")
+})
+entities = Dictionary[StringName, Array]({
+&"alice": [&"age", &"wealth"]
+})
+tags = []
+relationship_definitions = Dictionary[StringName, Dictionary]({})
+entity_relationships_map = Dictionary[Array, Array]({})
+instruction_definitions = Dictionary[StringName, ExtResource("1_xg7xr")]({})
+global_entities = Dictionary[StringName, StringName]({})
+metadata/_custom_type_script = "uid://g5tl1hlpkim2"
