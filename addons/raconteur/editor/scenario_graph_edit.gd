@@ -27,14 +27,20 @@ func _load_test_file() -> void:
 
 
 func _display_file(file: RaconteurFile) -> void:
-    for scenario_def_view in file.scenario_definition_views:
-        pass
+    var scenario_def_view := file.scenario_definition_views[0]
+    for node in scenario_def_view.scenario_definition.scenario_nodes.values():
+        var graph_node := ScenarioGraphNode.create()
+        add_child(graph_node)
+        graph_node.title = node.label
+        graph_node.position_offset = scenario_def_view.node_position_offsets[node.id]
 
 
 func _on_popup_request(at_position: Vector2) -> void:
-    _click_position = at_position
+    # User note at https://docs.godotengine.org/en/stable/classes/class_graphedit.html
+    _click_position = (at_position + scroll_offset) / zoom
     # https://github.com/godotengine/godot/issues/95151
-    _popup.popup(Rect2i(get_screen_transform() * at_position, Vector2i.ZERO))
+    var popup_position := get_screen_transform() * at_position
+    _popup.popup(Rect2i(popup_position, Vector2i.ZERO))
 
 
 func _on_popup_index_pressed(index: int) -> void:
