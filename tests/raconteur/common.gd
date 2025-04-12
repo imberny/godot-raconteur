@@ -56,29 +56,29 @@ static func alice_and_bob_world(schema_) -> RaconteurWorld:
 	return world_
 
 
-static func beat_definitions() -> Array[RaconteurBeatDefinition]:
-	var beats_list: Array[RaconteurBeatDefinition] = []
+static func scenario_definitions() -> Array[RaconteurScenarioDefinition]:
+	var scenario_list: Array[RaconteurScenarioDefinition] = []
 
-	var messenger_beat := RaconteurBeatDefinition.new()
-	messenger_beat.alias_add(&"messenger", &"character")
-	messenger_beat.alias_add(&"wealthy woman", &"character")
-	messenger_beat.constraint_add(
+	var messenger_scenario := RaconteurScenarioDefinition.new()
+	messenger_scenario.alias_add(&"messenger", &"character")
+	messenger_scenario.alias_add(&"wealthy woman", &"character")
+	messenger_scenario.constraint_add(
 		RaconteurConstraintHasRelationship.new(
 			&"wealthy woman", &"employs", &"messenger"
 		)
 	)
-	messenger_beat.constraint_add(RaconteurConstraintSet.new(
+	messenger_scenario.constraint_add(RaconteurConstraintSet.new(
 		&"wealthy woman", &"wealth", RaconteurConstraintSet.Operator.ONE_OF, [&"rich", &"opulent"]
 	))
-	var messenger_start_node := messenger_beat.scenario_node_create()
-	messenger_beat.scenario_set_start_node(messenger_start_node.id)
+	var messenger_start_node := messenger_scenario.scenario_node_create()
+	messenger_scenario.scenario_set_start_node(messenger_start_node.id)
 	messenger_start_node.label = &"start"
 	var greetings_line := RaconteurLine.new()
 	greetings_line.label = &"greetings"
 	greetings_line.content = "Hello, {PROTAGONIST.name}. I bear a message from Mme {wealthy woman.name}."
 	messenger_start_node.line_add(greetings_line)
 	messenger_start_node.instruction_add(&"speak", [&"messenger", &"PROTAGONIST", &"greetings"])
-	var accept_node := messenger_beat.scenario_node_create()
+	var accept_node := messenger_scenario.scenario_node_create()
 	messenger_start_node.next_add(accept_node.id)
 	accept_node.label = &"accept message"
 	var accept_line := RaconteurLine.new()
@@ -86,7 +86,7 @@ static func beat_definitions() -> Array[RaconteurBeatDefinition]:
 	accept_line.content = "Ok, let's hear it."
 	accept_node.line_add(accept_line)
 	accept_node.instruction_add(&"speak", [&"PROTAGONIST", &"messenger", &"accept"])
-	var refuse_node := messenger_beat.scenario_node_create()
+	var refuse_node := messenger_scenario.scenario_node_create()
 	messenger_start_node.next_add(refuse_node.id)
 	refuse_node.label = &"refuse message"
 	var refuse_line := RaconteurLine.new()
@@ -95,12 +95,12 @@ static func beat_definitions() -> Array[RaconteurBeatDefinition]:
 	refuse_node.line_add(refuse_line)
 	refuse_node.instruction_add(&"speak", [&"PROTAGONIST", &"messenger", &"refuse"])
 
-	beats_list.append(messenger_beat)
+	scenario_list.append(messenger_scenario)
 
-	var non_matching_beat := RaconteurBeatDefinition.new()
-	non_matching_beat.alias_add(&"no match", &"character")
-	non_matching_beat.constraint_add(RaconteurConstraintHasTag.new(&"no match", &"unmatched tag"))
+	var non_matching_scenario := RaconteurScenarioDefinition.new()
+	non_matching_scenario.alias_add(&"no match", &"character")
+	non_matching_scenario.constraint_add(RaconteurConstraintHasTag.new(&"no match", &"unmatched tag"))
 
-	beats_list.append(non_matching_beat)
+	scenario_list.append(non_matching_scenario)
 
-	return beats_list
+	return scenario_list

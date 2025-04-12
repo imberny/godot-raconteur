@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RaconteurFile" load_steps=4 format=3 uid="uid://vlsf65o23ywm"]
+
+[ext_resource type="Script" uid="uid://v1who4kbuob" path="res://addons/raconteur/editor/raconteur_scenario_definition_view.gd" id="1_w045p"]
+[ext_resource type="Script" uid="uid://bqwraknx10exd" path="res://addons/raconteur/editor/raconteur_file.gd" id="2_w045p"]
+[ext_resource type="Resource" uid="uid://clni2gsymf4br" path="res://test_schema.tres" id="3_cmhwe"]
+
+[resource]
+script = ExtResource("2_w045p")
+schema = ExtResource("3_cmhwe")
+scenario_definition_views = Array[ExtResource("1_w045p")]([])
+metadata/_custom_type_script = "uid://bqwraknx10exd"

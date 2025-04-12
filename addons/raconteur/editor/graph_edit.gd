@@ -4,15 +4,31 @@ extends GraphEdit
 
 var _popup: PopupMenu
 var _click_position: Vector2
+var _file: RaconteurFile
 
 
 func _ready() -> void:
+    _setup_popup()
+    _load_test_file()
+
+
+func _setup_popup() -> void:
     popup_request.connect(_on_popup_request)
     _popup = PopupMenu.new()
     add_child(_popup)
     _popup.popup_window = true
     _popup.add_item("New node")
     _popup.index_pressed.connect(_on_popup_index_pressed)
+
+
+func _load_test_file() -> void:
+    _file = load("res://test_raconteur_file.tres")
+    _display_file(_file)
+
+
+func _display_file(file: RaconteurFile) -> void:
+    for scenario_def_view in file.scenario_definition_views:
+        pass
 
 
 func _on_popup_request(at_position: Vector2) -> void:

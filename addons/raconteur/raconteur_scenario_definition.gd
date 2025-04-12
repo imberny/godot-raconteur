@@ -1,4 +1,4 @@
-class_name RaconteurBeatDefinition extends Resource
+class_name RaconteurScenarioDefinition extends Resource
 
 
 @export var aliases: Dictionary[StringName, StringName] = {}

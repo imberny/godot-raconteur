@@ -1,31 +1,31 @@
-## This class allows querying a list of possible beat_definitions for the given world.
+## This class allows querying a list of possible scenario_definitions for the given world.
 class_name Raconteur
 
 
 var schema: RaconteurSchema
-var beat_definitions: Array[RaconteurBeatDefinition] = []
+var scenario_definitions: Array[RaconteurScenarioDefinition] = []
 
 
 func _init(schema_: RaconteurSchema) -> void:
 	schema = schema_
 
 
-func beat_definition_add(beat: RaconteurBeatDefinition) -> void:
-	beat_definitions.append(beat)
+func scenario_definition_add(scenario: RaconteurScenarioDefinition) -> void:
+	scenario_definitions.append(scenario)
 
 
-func query(world: RaconteurWorld) -> Array[RaconteurBeat]:
-	var beats: Array[RaconteurBeat] = []
+func query(world: RaconteurWorld) -> Array[RaconteurScenario]:
+	var scenarios: Array[RaconteurScenario] = []
 
-	for beat_def in beat_definitions:
-		var suitable_beats := _try_match_beat(world, beat_def)
-		beats.append_array(suitable_beats)
+	for scenario_def in scenario_definitions:
+		var suitable_scenarios := _try_match_scenario(world, scenario_def)
+		scenarios.append_array(suitable_scenarios)
 
-	return beats
+	return scenarios
 
 
-func _try_match_beat(world: RaconteurWorld, definition: RaconteurBeatDefinition) -> Array[RaconteurBeat]:
-	var beats: Array[RaconteurBeat] = []
+func _try_match_scenario(world: RaconteurWorld, definition: RaconteurScenarioDefinition) -> Array[RaconteurScenario]:
+	var scenarios: Array[RaconteurScenario] = []
 	# gather candidates for each alias based on required entity type
 	var first_pass_candidates: Dictionary[StringName, Array] = {}
 	var alias_list := definition.aliases.keys()
@@ -48,8 +48,8 @@ func _try_match_beat(world: RaconteurWorld, definition: RaconteurBeatDefinition)
 			var alias: StringName = alias_list[i]
 			alias_bindings[alias] = permutation[i]
 		if _is_permutation_valid(world, definition, alias_bindings):
-			beats.append(RaconteurBeat.new(schema, definition, alias_bindings))
-	return beats
+			scenarios.append(RaconteurScenario.new(schema, definition, alias_bindings))
+	return scenarios
 
 
 func _generate_permutations_recursive(arr: Array[Array]) -> Array[Array]:
@@ -70,7 +70,7 @@ func _generate_permutations_recursive(arr: Array[Array]) -> Array[Array]:
 
 func _is_permutation_valid(
 	world: RaconteurWorld,
-	definition: RaconteurBeatDefinition,
+	definition: RaconteurScenarioDefinition,
 	alias_bindings: Dictionary,
 ) -> bool:
 	for constraint in definition.constraints:

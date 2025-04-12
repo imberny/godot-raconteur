@@ -28,10 +28,33 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer/MarginContainer"]
+[node name="ScenarioGraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("1_0ojw0")
+
+[node name="ScenarioGraphNode" type="GraphNode" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit"]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 201.0
+offset_right = 289.0
+offset_bottom = 279.0
+mouse_filter = 1
+position_offset = Vector2(223, 201)
+title = "DEded"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit/ScenarioGraphNode"]
+layout_mode = 2
+text = "test"
 
 [node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer/MarginContainer"]
 layout_mode = 2
@@ -43,13 +66,13 @@ theme_override_constants/margin_bottom = 10
 [node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="NewBeatButton" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
+[node name="NewScenarioButton" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "New beat"
+text = "New scenario"
 
-[node name="LoadBeatButton" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
+[node name="LoadScenarioButton" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "Load beat"
+text = "Load scenario"
 
 [node name="PlaybackPanel" type="PanelContainer" parent="VSplitContainer/HSplitContainer"]
 custom_minimum_size = Vector2(150, 0)
@@ -88,9 +111,9 @@ layout_mode = 2
 layout_mode = 2
 text = "Schema"
 
-[node name="Beats" type="Button" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
+[node name="Scenarios" type="Button" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 layout_mode = 2
-text = "Beats"
+text = "Scenarios"
 
 [node name="World" type="Button" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 layout_mode = 2
@@ -104,7 +127,7 @@ size_flags_horizontal = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BeatEditor" type="MarginContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="ScenarioEditor" type="MarginContainer" parent="VSplitContainer/BottomDrawer/VBoxContainer/MarginContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3

@@ -57,5 +57,4 @@ relationship_definitions = Array[ExtResource("3_3n0ge")]([SubResource("Resource_
 instruction_definitions = Dictionary[StringName, ExtResource("1_xg7xr")]({
 &"speak": SubResource("Resource_ra81p")
 })
-global_entities = Dictionary[StringName, StringName]({})
 metadata/_custom_type_script = "uid://g5tl1hlpkim2"

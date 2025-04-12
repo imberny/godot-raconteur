@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="RaconteurBeatDefinition" load_steps=14 format=3 uid="uid://dlvqck4pkk383"]
+[gd_resource type="Resource" script_class="RaconteurScenarioDefinition" load_steps=14 format=3 uid="uid://dlvqck4pkk383"]
 
 [ext_resource type="Script" uid="uid://35mlfcq8wgvn" path="res://addons/raconteur/constraint/raconteur_constraint.gd" id="1_tje6h"]
 [ext_resource type="Script" uid="uid://7y6k417guhxh" path="res://addons/raconteur/constraint/raconteur_constraint_has_tag.gd" id="2_001lc"]
 [ext_resource type="Script" uid="uid://cgbbxyr3uhsd4" path="res://addons/raconteur/raconteur_entity.gd" id="2_2sfef"]
 [ext_resource type="Script" uid="uid://df0whuegtwosv" path="res://addons/raconteur/raconteur_relationship.gd" id="3_001lc"]
 [ext_resource type="Script" uid="uid://ceup28ahbqabm" path="res://addons/raconteur/raconteur_scenario_node.gd" id="4_i58kx"]
-[ext_resource type="Script" uid="uid://c8ef0fk3vf184" path="res://addons/raconteur/raconteur_beat_definition.gd" id="5_xorxu"]
 [ext_resource type="Script" uid="uid://ce3nlu21a7j2x" path="res://addons/raconteur/raconteur_line.gd" id="6_i58kx"]
 [ext_resource type="Script" uid="uid://b4yyamta7x5l0" path="res://addons/raconteur/raconteur_instruction_aliased.gd" id="6_xorxu"]
+[ext_resource type="Script" uid="uid://c8ef0fk3vf184" path="res://addons/raconteur/raconteur_scenario_definition.gd" id="8_i58kx"]
 
 [sub_resource type="Resource" id="Resource_xorxu"]
 script = ExtResource("2_001lc")
@@ -23,12 +23,12 @@ metadata/_custom_type_script = "uid://df0whuegtwosv"
 
 [sub_resource type="Resource" id="Resource_o8c84"]
 script = ExtResource("6_xorxu")
-name = &""
-args = [&""]
+name = &"speak"
+args = [&"rich woman", &"PROTAGONIST", &"greetings"]
 
 [sub_resource type="Resource" id="Resource_46aao"]
 script = ExtResource("6_i58kx")
-label = &"Greetings"
+label = &"greetings"
 content = "Hello friend!"
 constraints = Array[ExtResource("1_tje6h")]([])
 metadata/_custom_type_script = "uid://ce3nlu21a7j2x"
@@ -44,7 +44,7 @@ instructions = Array[ExtResource("6_xorxu")]([SubResource("Resource_o8c84")])
 metadata/_custom_type_script = "uid://ceup28ahbqabm"
 
 [resource]
-script = ExtResource("5_xorxu")
+script = ExtResource("8_i58kx")
 aliases = Dictionary[StringName, StringName]({
 &"rich woman": &"character"
 })

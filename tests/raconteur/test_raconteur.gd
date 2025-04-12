@@ -8,12 +8,12 @@ func test_raconteur():
 	var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
 
 	var raconteur := Raconteur.new(schema)
-	for beat in COMMON.beat_definitions():
-		raconteur.beat_definition_add(beat)
+	for scenario in COMMON.scenario_definitions():
+		raconteur.scenario_definition_add(scenario)
 
-	var beats := raconteur.query(world)
-	assert_eq(len(beats), 1)
-	assert_eq(len(beats[0].alias_bindings), 2)
+	var scenarios := raconteur.query(world)
+	assert_eq(len(scenarios), 1)
+	assert_eq(len(scenarios[0].alias_bindings), 2)
 
 
 func test_permutations_recursive():
