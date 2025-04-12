@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://ceup28ahbqabm" path="res://addons/raconteur/raconteur_scenario_node.gd" id="4_i58kx"]
 [ext_resource type="Script" uid="uid://c8ef0fk3vf184" path="res://addons/raconteur/raconteur_beat_definition.gd" id="5_xorxu"]
 [ext_resource type="Script" uid="uid://ce3nlu21a7j2x" path="res://addons/raconteur/raconteur_line.gd" id="6_i58kx"]
-[ext_resource type="Script" path="res://addons/raconteur/raconteur_instruction_aliased.gd" id="6_xorxu"]
+[ext_resource type="Script" uid="uid://b4yyamta7x5l0" path="res://addons/raconteur/raconteur_instruction_aliased.gd" id="6_xorxu"]
 
 [sub_resource type="Resource" id="Resource_xorxu"]
 script = ExtResource("2_001lc")

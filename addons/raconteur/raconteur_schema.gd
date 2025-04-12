@@ -9,11 +9,13 @@ class_name RaconteurSchema extends Resource
 @export var tags: Array = []
 ## A dictionary of relationship names to a dictionary of entity pairs to their corresponding RaconteurRelationship objects.
 ## { relationship_name: { [entity_a, entity_b]: RaconteurRelationship } }
-@export var relationship_definitions: Dictionary[StringName, Dictionary] = {}
-@export var entity_relationships_map: Dictionary[Array, Array] = {}
+@export var relationship_definitions: Array[RaconteurRelationshipDefinition] = []
 ## A dictionary of instruction names to their corresponding RaconteurInstructionDefinition objects.
 @export var instruction_definitions: Dictionary[StringName, RaconteurInstructionDefinition] = {}
 @export var global_entities: Dictionary[StringName, StringName] = {}
+
+var _entity_pairs_to_relationship_definitions: Dictionary[Array, Dictionary] = {}
+var _relationship_name_to_entity_pairs: Dictionary[StringName, Array] = {}
 
 
 ## Checks if the schema contains an enum with the given name.
@@ -102,29 +104,24 @@ func relationship_definition_add(
 	entity_b: StringName,
 	qualifier_enum := &"",
 ) -> void:
-	if not relationship_definitions.has(relationship_name):
-		relationship_definitions[relationship_name] = {}
-	var relationship := relationship_definitions[relationship_name]
-	relationship[[entity_a, entity_b]] = RaconteurRelationshipDefinition.new(entity_a, relationship_name, entity_b, qualifier_enum)
-	if not entity_relationships_map.has([entity_a, entity_b]):
-		entity_relationships_map[[entity_a, entity_b]] = []
-	entity_relationships_map[[entity_a, entity_b]].append(
-		relationship_name
-	)
+	relationship_definitions.append(RaconteurRelationshipDefinition.new(entity_a, relationship_name, entity_b, qualifier_enum))
+	_try_rebuild_relationship_cache()
 
 
 ## Returns an array of relationship names between two entities.
 func relationship_definitions_get_between(entity_a: StringName, entity_b: StringName) -> Array:
-	return entity_relationships_map.get([entity_a, entity_b], [])
+	_try_rebuild_relationship_cache()
+
+	var definitions: Array = _entity_pairs_to_relationship_definitions.get([entity_a, entity_b], {}).values()
+	return definitions.map(func(d): return d.relationship_name)
 
 
 ## Returns a specific RaconteurRelationship object between two entities.
-func relationship_definition_get(entity_a: StringName, relationship_name: StringName, entity_b: StringName) -> RaconteurRelationshipDefinition:
-	var relationships: Dictionary = relationship_definitions.get(relationship_name, {})
-	if relationships.is_empty():
-		return null
-	
-	return relationships.get([entity_a, entity_b], null)
+func relationship_definition_get(entity_type_a: StringName, relationship_name: StringName, entity_type_b: StringName) -> RaconteurRelationshipDefinition:
+	_try_rebuild_relationship_cache()
+
+	var definitions := _entity_pairs_to_relationship_definitions[[entity_type_a, entity_type_b]]
+	return definitions.get(relationship_name, null)
 
 
 ## Returns a list of errors in the described relationship.
@@ -177,3 +174,22 @@ func instruction_definition_set_callback(name: StringName, callback: Callable) -
 ## Returns a specific RaconteurInstructionDefinition object.
 func instruction_definition_get(name: StringName) -> RaconteurInstructionDefinition:
 	return instruction_definitions.get(name, null)
+
+
+func _try_rebuild_relationship_cache() -> void:
+	if _relationship_name_to_entity_pairs.size() == relationship_definitions.size():
+		return
+
+	_entity_pairs_to_relationship_definitions.clear()
+	_relationship_name_to_entity_pairs.clear()
+
+	for definition in relationship_definitions:
+		var entity_pair := [definition.entity_type_a, definition.entity_type_b]
+
+		if not _entity_pairs_to_relationship_definitions.has(entity_pair):
+			_entity_pairs_to_relationship_definitions[entity_pair] = {}
+		_entity_pairs_to_relationship_definitions[entity_pair][definition.relationship_name] = definition
+
+		if not _relationship_name_to_entity_pairs.has(definition.relationship_name):
+			_relationship_name_to_entity_pairs[definition.relationship_name] = []
+		_relationship_name_to_entity_pairs[definition.relationship_name].append(entity_pair)

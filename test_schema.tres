@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="RaconteurSchema" load_steps=6 format=3 uid="uid://clni2gsymf4br"]
+[gd_resource type="Resource" script_class="RaconteurSchema" load_steps=7 format=3 uid="uid://clni2gsymf4br"]
 
 [ext_resource type="Script" uid="uid://4wo2fd3iusa7" path="res://addons/raconteur/raconteur_instruction_definition.gd" id="1_xg7xr"]
 [ext_resource type="Script" uid="uid://6b12k8rydyva" path="res://addons/raconteur/raconteur_property.gd" id="2_3n0ge"]
+[ext_resource type="Script" uid="uid://clcltwhbulurl" path="res://addons/raconteur/raconteur_relationship_definition.gd" id="3_3n0ge"]
 [ext_resource type="Script" uid="uid://g5tl1hlpkim2" path="res://addons/raconteur/raconteur_schema.gd" id="3_hu5rb"]
 
 [sub_resource type="Resource" id="Resource_n2h0f"]
@@ -29,8 +30,7 @@ entities = Dictionary[StringName, Array]({
 &"alice": [&"age", &"wealth"]
 })
 tags = []
-relationship_definitions = Dictionary[StringName, Dictionary]({})
-entity_relationships_map = Dictionary[Array, Array]({})
+relationship_definitions = Array[ExtResource("3_3n0ge")]([])
 instruction_definitions = Dictionary[StringName, ExtResource("1_xg7xr")]({})
 global_entities = Dictionary[StringName, StringName]({})
 metadata/_custom_type_script = "uid://g5tl1hlpkim2"
