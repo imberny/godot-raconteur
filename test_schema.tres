@@ -1,9 +1,16 @@
-[gd_resource type="Resource" script_class="RaconteurSchema" load_steps=7 format=3 uid="uid://clni2gsymf4br"]
+[gd_resource type="Resource" script_class="RaconteurSchema" load_steps=10 format=3 uid="uid://clni2gsymf4br"]
 
 [ext_resource type="Script" uid="uid://4wo2fd3iusa7" path="res://addons/raconteur/raconteur_instruction_definition.gd" id="1_xg7xr"]
 [ext_resource type="Script" uid="uid://6b12k8rydyva" path="res://addons/raconteur/raconteur_property.gd" id="2_3n0ge"]
 [ext_resource type="Script" uid="uid://clcltwhbulurl" path="res://addons/raconteur/raconteur_relationship_definition.gd" id="3_3n0ge"]
 [ext_resource type="Script" uid="uid://g5tl1hlpkim2" path="res://addons/raconteur/raconteur_schema.gd" id="3_hu5rb"]
+
+[sub_resource type="Resource" id="Resource_ra81p"]
+script = ExtResource("1_xg7xr")
+name = "speak"
+args = Array[StringName]([&"character", &"character", &"line"])
+arg_types = Array[int]([0, 0, 2])
+metadata/_custom_type_script = "uid://4wo2fd3iusa7"
 
 [sub_resource type="Resource" id="Resource_n2h0f"]
 script = ExtResource("2_3n0ge")
@@ -17,6 +24,22 @@ type = 0
 enum_name = &"wealth"
 metadata/_custom_type_script = "uid://6b12k8rydyva"
 
+[sub_resource type="Resource" id="Resource_3n0ge"]
+script = ExtResource("3_3n0ge")
+relationship_name = &"knows"
+entity_type_a = &"character"
+entity_type_b = &"character"
+qualifier_enum = &""
+metadata/_custom_type_script = "uid://clcltwhbulurl"
+
+[sub_resource type="Resource" id="Resource_hu5rb"]
+script = ExtResource("3_3n0ge")
+relationship_name = &"owns"
+entity_type_a = &"character"
+entity_type_b = &"item"
+qualifier_enum = &""
+metadata/_custom_type_script = "uid://clcltwhbulurl"
+
 [resource]
 script = ExtResource("3_hu5rb")
 enums = Dictionary[StringName, Array]({
@@ -29,8 +52,10 @@ properties = Dictionary[StringName, ExtResource("2_3n0ge")]({
 entities = Dictionary[StringName, Array]({
 &"alice": [&"age", &"wealth"]
 })
-tags = []
-relationship_definitions = Array[ExtResource("3_3n0ge")]([])
-instruction_definitions = Dictionary[StringName, ExtResource("1_xg7xr")]({})
+tags = [&"hurt"]
+relationship_definitions = Array[ExtResource("3_3n0ge")]([SubResource("Resource_3n0ge"), SubResource("Resource_hu5rb")])
+instruction_definitions = Dictionary[StringName, ExtResource("1_xg7xr")]({
+&"speak": SubResource("Resource_ra81p")
+})
 global_entities = Dictionary[StringName, StringName]({})
 metadata/_custom_type_script = "uid://g5tl1hlpkim2"

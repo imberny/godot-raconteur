@@ -12,7 +12,6 @@ class_name RaconteurSchema extends Resource
 @export var relationship_definitions: Array[RaconteurRelationshipDefinition] = []
 ## A dictionary of instruction names to their corresponding RaconteurInstructionDefinition objects.
 @export var instruction_definitions: Dictionary[StringName, RaconteurInstructionDefinition] = {}
-@export var global_entities: Dictionary[StringName, StringName] = {}
 
 var _entity_pairs_to_relationship_definitions: Dictionary[Array, Dictionary] = {}
 var _relationship_name_to_entity_pairs: Dictionary[StringName, Array] = {}
