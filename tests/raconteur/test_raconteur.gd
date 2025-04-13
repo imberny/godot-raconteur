@@ -16,6 +16,19 @@ func test_raconteur():
 	assert_eq(len(scenarios[0].alias_bindings), 2)
 
 
+func test_raconteur_exclusions():
+	var schema: RaconteurSchema = COMMON.schema()
+	var world: RaconteurWorld = COMMON.alice_and_bob_world(schema)
+	world.scenario_exclude(&"Message from wealthy woman")
+
+	var raconteur := Raconteur.new(schema)
+	for scenario in COMMON.scenario_definitions():
+		raconteur.scenario_definition_add(scenario)
+
+	var scenarios := raconteur.query(world)
+	assert_eq(len(scenarios), 0)
+
+
 func test_permutations_recursive():
 	var arr: Array[Array] = [[1, 2, 3], [4], [5, 6, 7]]
 	var expected := [

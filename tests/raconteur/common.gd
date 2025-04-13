@@ -60,6 +60,7 @@ static func scenario_definitions() -> Array[RaconteurScenarioDefinition]:
 	var scenario_list: Array[RaconteurScenarioDefinition] = []
 
 	var messenger_scenario := RaconteurScenarioDefinition.new()
+	messenger_scenario.title = &"Message from wealthy woman"
 	messenger_scenario.alias_add(&"messenger", &"character")
 	messenger_scenario.alias_add(&"wealthy woman", &"character")
 	messenger_scenario.constraint_add(
@@ -98,6 +99,7 @@ static func scenario_definitions() -> Array[RaconteurScenarioDefinition]:
 	scenario_list.append(messenger_scenario)
 
 	var non_matching_scenario := RaconteurScenarioDefinition.new()
+	non_matching_scenario.title = &"no match"
 	non_matching_scenario.alias_add(&"no match", &"character")
 	non_matching_scenario.constraint_add(RaconteurConstraintHasTag.new(&"no match", &"unmatched tag"))
 

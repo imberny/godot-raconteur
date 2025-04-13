@@ -45,6 +45,7 @@ metadata/_custom_type_script = "uid://ceup28ahbqabm"
 
 [resource]
 script = ExtResource("8_i58kx")
+title = &""
 aliases = Dictionary[StringName, StringName]({
 &"rich woman": &"character"
 })

@@ -33,6 +33,72 @@ layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("1_0ojw0")
 
+[node name="GraphNode" type="GraphNode" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit"]
+layout_mode = 0
+offset_left = 198.0
+offset_top = 220.0
+offset_right = 255.0
+offset_bottom = 298.0
+mouse_filter = 1
+position_offset = Vector2(198, 220)
+title = "test1"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit/GraphNode"]
+layout_mode = 2
+
+[node name="GraphNode2" type="GraphNode" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit"]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 223.0
+offset_right = 410.0
+offset_bottom = 301.0
+mouse_filter = 1
+position_offset = Vector2(353, 223)
+title = "test2"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit/GraphNode2"]
+layout_mode = 2
+
+[node name="GraphNode3" type="GraphNode" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit"]
+layout_mode = 0
+offset_left = 354.0
+offset_top = 312.0
+offset_right = 411.0
+offset_bottom = 390.0
+mouse_filter = 1
+position_offset = Vector2(354, 312)
+title = "test3"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit/GraphNode3"]
+layout_mode = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0

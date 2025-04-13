@@ -25,7 +25,11 @@ func query(world: RaconteurWorld) -> Array[RaconteurScenario]:
 
 
 func _try_match_scenario(world: RaconteurWorld, definition: RaconteurScenarioDefinition) -> Array[RaconteurScenario]:
+	if world.scenario_is_excluded(definition.title):
+		return []
+
 	var scenarios: Array[RaconteurScenario] = []
+
 	# gather candidates for each alias based on required entity type
 	var first_pass_candidates: Dictionary[StringName, Array] = {}
 	var alias_list := definition.aliases.keys()

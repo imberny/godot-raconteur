@@ -1,6 +1,7 @@
 class_name RaconteurScenarioDefinition extends Resource
 
 
+@export var title: StringName
 @export var aliases: Dictionary[StringName, StringName] = {}
 @export var new_entities: Dictionary[StringName, RaconteurEntity] = {}
 @export var new_relationships: Array[RaconteurRelationship] = []

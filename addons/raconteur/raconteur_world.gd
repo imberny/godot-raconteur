@@ -10,6 +10,7 @@ var entities: Dictionary[StringName, RaconteurEntity] = {}
 var type_to_entity_keys: Dictionary[StringName, Array] = {}
 var global_entities: Dictionary[StringName, RaconteurEntity] = {}
 var relationships: Dictionary[Array, Dictionary] = {}
+var scenarios_to_exclude: Array[StringName] = []
 
 
 func _init(schema_: RaconteurSchema) -> void:
@@ -109,3 +110,11 @@ func global_entity_add(entity_type: StringName, key: StringName, properties: Dic
 ## Returns the global entity by key or null if it doesn't exist.
 func global_entity_get(key: StringName) -> RaconteurEntity:
 	return global_entities.get(key, null)
+
+
+func scenario_exclude(scenario_title: StringName) -> void:
+	scenarios_to_exclude.append(scenario_title)
+
+
+func scenario_is_excluded(scenario_title: StringName) -> bool:
+	return scenarios_to_exclude.has(scenario_title)
