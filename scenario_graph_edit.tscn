@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv8g4pi6bocge"]
+
+[ext_resource type="Script" uid="uid://d7jynao5vg3g" path="res://addons/raconteur/editor/scenario_graph_edit.gd" id="1_xxe1d"]
+
+[node name="ScenarioGraphEdit" type="GraphEdit"]
+size_flags_horizontal = 3
+script = ExtResource("1_xxe1d")

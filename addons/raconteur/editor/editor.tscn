@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnlooayf8u5iw"]
+[gd_scene load_steps=3 format=3 uid="uid://cnlooayf8u5iw"]
 
-[ext_resource type="Script" uid="uid://d7jynao5vg3g" path="res://addons/raconteur/editor/scenario_graph_edit.gd" id="1_0ojw0"]
+[ext_resource type="Script" uid="uid://bk6ij6alss6bd" path="res://addons/raconteur/editor/editor.gd" id="1_nijns"]
+[ext_resource type="PackedScene" uid="uid://dv8g4pi6bocge" path="res://scenario_graph_edit.tscn" id="2_nijns"]
 
 [node name="RaconteurEditor" type="Control"]
 layout_mode = 3
@@ -11,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_nijns")
 
 [node name="VSplitContainer" type="VSplitContainer" parent="."]
 layout_mode = 1
@@ -28,10 +30,9 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ScenarioGraphEdit" type="GraphEdit" parent="VSplitContainer/HSplitContainer/MarginContainer"]
+[node name="ScenarioGraphEdit" parent="VSplitContainer/HSplitContainer/MarginContainer" instance=ExtResource("2_nijns")]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("1_0ojw0")
 
 [node name="MarginContainer" type="MarginContainer" parent="VSplitContainer/HSplitContainer/MarginContainer"]
 layout_mode = 2
@@ -42,6 +43,10 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="SaveFile" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Save file"
 
 [node name="NewFile" type="Button" parent="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -122,4 +127,5 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/OpenFile" to="VSplitContainer/HSplitContainer/MarginContainer/ScenarioGraphEdit" method="_on_open_file_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/SaveFile" to="." method="_on_save_file_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/OpenFile" to="." method="_on_open_file_pressed"]

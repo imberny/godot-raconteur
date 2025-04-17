@@ -1,3 +1,4 @@
+@tool
 class_name RaconteurScenarioNode extends Resource
 
 
@@ -7,10 +8,6 @@ class_name RaconteurScenarioNode extends Resource
 @export var constraints: Array[RaconteurConstraint]
 @export var next: Array[int]
 @export var instructions: Array[RaconteurInstructionAliased]
-
-
-func _init(id_: int) -> void:
-    id = id_
 
 
 func line_add(new_line: RaconteurLine) -> void:

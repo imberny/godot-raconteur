@@ -1,7 +1,6 @@
 ## This class allows querying a list of possible scenario_definitions for the given world.
 class_name Raconteur
 
-
 var schema: RaconteurSchema
 var scenario_definitions: Array[RaconteurScenarioDefinition] = []
 
@@ -24,7 +23,9 @@ func query(world: RaconteurWorld) -> Array[RaconteurScenario]:
 	return scenarios
 
 
-func _try_match_scenario(world: RaconteurWorld, definition: RaconteurScenarioDefinition) -> Array[RaconteurScenario]:
+func _try_match_scenario(
+	world: RaconteurWorld, definition: RaconteurScenarioDefinition
+) -> Array[RaconteurScenario]:
 	if world.scenario_is_excluded(definition.title):
 		return []
 
@@ -42,8 +43,8 @@ func _try_match_scenario(world: RaconteurWorld, definition: RaconteurScenarioDef
 			if entity.type == alias_entity_type:
 				candidates.append(entity.key)
 		first_pass_candidates[alias] = candidates
-	
-	# Generate all permutations 
+
+	# Generate all permutations
 	var permutations := _generate_permutations_recursive(first_pass_candidates.values().duplicate())
 
 	for permutation in permutations:
@@ -59,9 +60,9 @@ func _try_match_scenario(world: RaconteurWorld, definition: RaconteurScenarioDef
 func _generate_permutations_recursive(arr: Array[Array]) -> Array[Array]:
 	if arr.is_empty():
 		return [[]]
-	
+
 	var permutations: Array[Array] = []
-	
+
 	var sub_array := arr.pop_back()
 	for item in sub_array:
 		var sub_permutations := _generate_permutations_recursive(arr.duplicate())

@@ -1,3 +1,4 @@
+@tool
 class_name RaconteurScenarioDefinition extends Resource
 
 
@@ -31,7 +32,8 @@ func constraint_add(constraint: RaconteurConstraint) -> void:
 
 
 func scenario_node_create() -> RaconteurScenarioNode:
-    var node := RaconteurScenarioNode.new(_id_count)
+    var node := RaconteurScenarioNode.new()
+    node.id = _id_count
     _id_count += 1
     scenario_nodes[node.id] = node
     return node

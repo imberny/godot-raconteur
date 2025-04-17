@@ -6,7 +6,9 @@ class_name RaconteurEntity extends Resource
 @export var tags: Array[StringName] = []
 
 
-static func validate(schema: RaconteurSchema, key_: StringName, type_: StringName, properties: Dictionary) -> Array:
+static func validate(
+	schema: RaconteurSchema, key_: StringName, type_: StringName, properties: Dictionary
+) -> Array:
 	var errors := []
 	if not schema.entity_has(type_):
 		errors.append("Entity type '%s' not found" % type_)
