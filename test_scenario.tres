@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RaconteurScenarioDefinition" load_steps=14 format=3 uid="uid://dlvqck4pkk383"]
+[gd_resource type="Resource" script_class="RaconteurScenarioDefinition" load_steps=12 format=3 uid="uid://dlvqck4pkk383"]
 
 [ext_resource type="Script" uid="uid://35mlfcq8wgvn" path="res://addons/raconteur/constraint/raconteur_constraint.gd" id="1_tje6h"]
 [ext_resource type="Script" uid="uid://7y6k417guhxh" path="res://addons/raconteur/constraint/raconteur_constraint_has_tag.gd" id="2_001lc"]
@@ -21,27 +21,15 @@ entity_b = &""
 qualifier_value = &""
 metadata/_custom_type_script = "uid://df0whuegtwosv"
 
-[sub_resource type="Resource" id="Resource_o8c84"]
-script = ExtResource("6_xorxu")
-name = &"speak"
-args = [&"rich woman", &"PROTAGONIST", &"greetings"]
-
-[sub_resource type="Resource" id="Resource_46aao"]
-script = ExtResource("6_i58kx")
-label = &"greetings"
-content = "Hello friend!"
-constraints = Array[ExtResource("1_tje6h")]([])
-metadata/_custom_type_script = "uid://ce3nlu21a7j2x"
-
-[sub_resource type="Resource" id="Resource_6847x"]
+[sub_resource type="Resource" id="Resource_rmooo"]
 script = ExtResource("4_i58kx")
 id = 0
-label = &"start"
-lines = Array[ExtResource("6_i58kx")]([SubResource("Resource_46aao")])
+label = &""
+lines = Array[ExtResource("6_i58kx")]([])
 constraints = Array[ExtResource("1_tje6h")]([])
 next = Array[int]([])
-instructions = Array[ExtResource("6_xorxu")]([SubResource("Resource_o8c84")])
-metadata/_custom_type_script = "uid://ceup28ahbqabm"
+instructions = Array[ExtResource("6_xorxu")]([])
+graph_node_offset = Vector2(557, 556)
 
 [resource]
 script = ExtResource("8_i58kx")
@@ -53,7 +41,7 @@ new_entities = Dictionary[StringName, ExtResource("2_2sfef")]({})
 new_relationships = Array[ExtResource("3_001lc")]([SubResource("Resource_1rueh")])
 constraints = Array[ExtResource("1_tje6h")]([SubResource("Resource_xorxu")])
 scenario_nodes = Dictionary[int, ExtResource("4_i58kx")]({
-0: SubResource("Resource_6847x")
+0: SubResource("Resource_rmooo")
 })
 start_node = 0
 metadata/_custom_type_script = "uid://c8ef0fk3vf184"

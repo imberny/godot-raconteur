@@ -8,6 +8,7 @@ class_name RaconteurScenarioNode extends Resource
 @export var constraints: Array[RaconteurConstraint]
 @export var next: Array[int]
 @export var instructions: Array[RaconteurInstructionAliased]
+@export var graph_node_offset: Vector2
 
 
 func line_add(new_line: RaconteurLine) -> void:

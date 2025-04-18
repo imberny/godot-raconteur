@@ -1,10 +1,11 @@
 @tool
 extends GraphEdit
 
+signal changed
 
 var _popup: PopupMenu
 var _click_position: Vector2
-var _scenario_def_view: RaconteurScenarioDefinitionView
+var _scenario_definition: RaconteurScenarioDefinition
 
 
 func _ready() -> void:
@@ -25,14 +26,21 @@ func _setup_graph() -> void:
     connection_request.connect(_on_connection_request)
 
 
-func display_scenario(scenario_definition_view: RaconteurScenarioDefinitionView) -> void:
-    _scenario_def_view = scenario_definition_view
+func clear() -> void:
     for child in get_children().filter(func(c): return c is GraphNode):
         child.queue_free()
-    for node in _scenario_def_view.scenario_definition.scenario_nodes.values():
+    _scenario_definition = null
+
+
+func display_scenario(scenario_definition: RaconteurScenarioDefinition) -> void:
+    clear()
+    _scenario_definition = scenario_definition
+    for node in _scenario_definition.scenario_nodes.values():
+        node = node as RaconteurScenarioNode
         var graph_node := ScenarioGraphNode.create(node)
         add_child(graph_node)
-        graph_node.position_offset = _scenario_def_view.node_position_offsets[node.id]
+        graph_node.position_offset = node.graph_node_offset
+    changed.emit()
 
 
 func _on_popup_request(at_position: Vector2) -> void:
@@ -52,11 +60,14 @@ func _on_popup_index_pressed(index: int) -> void:
 
 
 func _create_node(at_position: Vector2) -> void:
-    var scenario_node := _scenario_def_view.scenario_definition.scenario_node_create()
+    var scenario_node := _scenario_definition.scenario_node_create()
     var graph_node := ScenarioGraphNode.create(scenario_node)
     add_child(graph_node)
     graph_node.position_offset = at_position
+    scenario_node.graph_node_offset = at_position
+    changed.emit()
 
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
     connect_node(from_node, from_port, to_node, to_port)
+    changed.emit()

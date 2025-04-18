@@ -128,4 +128,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/SaveFile" to="." method="_on_save_file_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/NewFile" to="." method="_on_new_file_pressed"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/OpenFile" to="." method="_on_open_file_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/MarginContainer/MarginContainer/HBoxContainer/NewScenarioButton" to="." method="_on_new_scenario_button_pressed"]
