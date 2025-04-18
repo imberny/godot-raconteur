@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="RaconteurFile" load_steps=17 format=3 uid="uid://crvguorgo1xj8"]
+
+[ext_resource type="Script" uid="uid://c8ef0fk3vf184" path="res://addons/raconteur/raconteur_scenario_definition.gd" id="1_1hu25"]
+[ext_resource type="Script" uid="uid://35mlfcq8wgvn" path="res://addons/raconteur/constraint/raconteur_constraint.gd" id="2_4xsqp"]
+[ext_resource type="Script" uid="uid://4wo2fd3iusa7" path="res://addons/raconteur/raconteur_instruction_definition.gd" id="2_csojv"]
+[ext_resource type="Script" uid="uid://6b12k8rydyva" path="res://addons/raconteur/raconteur_property.gd" id="3_5q4gq"]
+[ext_resource type="Script" uid="uid://cgbbxyr3uhsd4" path="res://addons/raconteur/raconteur_entity.gd" id="3_385wk"]
+[ext_resource type="Script" uid="uid://df0whuegtwosv" path="res://addons/raconteur/raconteur_relationship.gd" id="4_oab6n"]
+[ext_resource type="Script" uid="uid://clcltwhbulurl" path="res://addons/raconteur/raconteur_relationship_definition.gd" id="4_yj16n"]
+[ext_resource type="Script" uid="uid://g5tl1hlpkim2" path="res://addons/raconteur/raconteur_schema.gd" id="5_m073r"]
+[ext_resource type="Script" uid="uid://ceup28ahbqabm" path="res://addons/raconteur/raconteur_scenario_node.gd" id="5_p66q7"]
+[ext_resource type="Script" uid="uid://bqwraknx10exd" path="res://addons/raconteur/editor/raconteur_file.gd" id="6_6inus"]
+[ext_resource type="Script" uid="uid://b4yyamta7x5l0" path="res://addons/raconteur/raconteur_instruction_aliased.gd" id="6_wosn8"]
+[ext_resource type="Script" uid="uid://ce3nlu21a7j2x" path="res://addons/raconteur/raconteur_line.gd" id="7_p856e"]
+
+[sub_resource type="Resource" id="Resource_wftau"]
+script = ExtResource("5_p66q7")
+id = 0
+label = &""
+lines = Array[ExtResource("7_p856e")]([])
+constraints = Array[ExtResource("2_4xsqp")]([])
+next = Array[int]([])
+instructions = Array[ExtResource("6_wosn8")]([])
+graph_node_offset = Vector2(299, -109)
+
+[sub_resource type="Resource" id="Resource_qb5xa"]
+script = ExtResource("5_p66q7")
+id = 1
+label = &""
+lines = Array[ExtResource("7_p856e")]([])
+constraints = Array[ExtResource("2_4xsqp")]([])
+next = Array[int]([])
+instructions = Array[ExtResource("6_wosn8")]([])
+graph_node_offset = Vector2(539, -64)
+
+[sub_resource type="Resource" id="Resource_jp5yr"]
+script = ExtResource("1_1hu25")
+title = &""
+aliases = Dictionary[StringName, StringName]({})
+new_entities = Dictionary[StringName, ExtResource("3_385wk")]({})
+new_relationships = Array[ExtResource("4_oab6n")]([])
+constraints = Array[ExtResource("2_4xsqp")]([])
+scenario_nodes = Dictionary[int, ExtResource("5_p66q7")]({
+0: SubResource("Resource_wftau"),
+1: SubResource("Resource_qb5xa")
+})
+start_node = 0
+
+[sub_resource type="Resource" id="Resource_4xsqp"]
+script = ExtResource("5_m073r")
+enums = Dictionary[StringName, Array]({})
+properties = Dictionary[StringName, ExtResource("3_5q4gq")]({})
+entities = Dictionary[StringName, Array]({})
+tags = []
+relationship_definitions = Array[ExtResource("4_yj16n")]([])
+instruction_definitions = Dictionary[StringName, ExtResource("2_csojv")]({})
+
+[resource]
+script = ExtResource("6_6inus")
+schema = SubResource("Resource_4xsqp")
+scenario_definitions = Array[ExtResource("1_1hu25")]([SubResource("Resource_jp5yr")])
